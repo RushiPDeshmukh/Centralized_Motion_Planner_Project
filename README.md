@@ -4,7 +4,8 @@ Localized motion planning on-board an Autonomous Vehicle (AV) using SLAM (Simult
 
 
 /src/Simulator/  Folder contains:
-     simulatorv0.py which is used to create city maps of class BLOCKS stored in map.pkl using pickle.
+
+    simulatorv0.py which is used to create city maps of class BLOCKS stored in map.pkl using pickle.
     map.pkl contains a city map can be open and edited to change the roads and orientations of roads. 
     grid.py contains a class function of GRID. This will be used to represent the city map in 150x150 grid.
     grid_tile.py contains a class function of GRIDTILE. This will be used to represent the singel tile on the grid.
