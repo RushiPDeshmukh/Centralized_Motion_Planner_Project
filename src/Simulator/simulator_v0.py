@@ -31,6 +31,7 @@ class Blocks:
         self.y = col * block_width
         self.width = block_width
         self.spacing = block_width//3
+        self.dir = ''
 
     def change_type(self, t):
         self.rtype = t
@@ -48,15 +49,21 @@ class Blocks:
     def is_up(self):
         """ Change road to weight of 5"""
         self.road = self.road * 5
+        self.dir.append('N')
     def is_down(self):
         """ Change road to weight of 6"""
         self.road = self.road * 6
+        self.dir.append('S')
+        
     def is_right(self):
         """ Chage road to weight of 10"""
         self.road = self.road * 10
+        self.dir.append('E')
+
     def is_left(self):
         """ Chage road to weight of 10"""
         self.road = self.road * 11
+        self.dir.append('W')
 
     def add_state(self,list):
         status = str(self.row)+" "+str(self.col)+" "+self.rtype+" "+str(self.angle)
@@ -196,7 +203,7 @@ def main():
                 if ev.key == pygame.K_RIGHT:
                     if row+1 < win_width/block_width:
                         row += 1
-                if ev.key ==pygame.K_s:
+                if ev.key ==pygame.K_c:
                     store(rmap)
 
                 #Rotate The block
