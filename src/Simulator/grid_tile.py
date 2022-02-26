@@ -9,6 +9,12 @@ RED = (255,0,0)
 GREEN = (0,255,0)
 
 class Grid_tile():
+    """
+    This class will give you the behaviour of each tile on the grid.
+    type : type of tile can be CAR, ROAD, OBSTACLE
+
+
+    """
     def __init__(self,pos,value,width):
         self.pos = pos
         self.x = pos[0]*width

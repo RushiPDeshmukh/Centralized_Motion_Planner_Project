@@ -9,6 +9,8 @@ class grid():
         self.data = grid_array
 
     def make_graph(self):
+        """
+        """
         pass
 
     def visualize(self):
