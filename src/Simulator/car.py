@@ -3,7 +3,8 @@ import numpy as np
 from grid import *
 
 class car():
-    def __init__(self,t,start_pos,goal_pos):
+    def __init__(self,t,start_pos,goal_pos,ID):
+        self.ID = ID
         self.start_position = start_pos
         self.goal_position = goal_pos
         self.position = self.get_position(t)
