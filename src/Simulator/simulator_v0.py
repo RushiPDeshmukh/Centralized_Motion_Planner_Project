@@ -1,3 +1,4 @@
+from importlib.resources import path
 import pygame
 import numpy as np
 import pickle
@@ -43,6 +44,19 @@ class Blocks:
             self.road = np.array([[0,1,0],[1,1,1],[0,1,0]])
         if self.rtype == 'void':
             self.road = np.array([[0,0,0],[0,0,0],[0,0,0]])
+    
+    def is_up(self):
+        """ Change road to weight of 5"""
+        self.road = self.road * 5
+    def is_down(self):
+        """ Change road to weight of 6"""
+        self.road = self.road * 6
+    def is_right(self):
+        """ Chage road to weight of 10"""
+        self.road = self.road * 10
+    def is_left(self):
+        """ Chage road to weight of 10"""
+        self.road = self.road * 11
 
     def add_state(self,list):
         status = str(self.row)+" "+str(self.col)+" "+self.rtype+" "+str(self.angle)
@@ -56,6 +70,14 @@ class Blocks:
             for j in range(3):
                 if self.road[i,j]==1:
                     color = GREY
+                elif self.road[i,j]==5:
+                    color = BLUE
+                elif self.road[i,j]==6:
+                    color = ORANGE
+                elif self.road[i,j]==10:
+                    color = RED
+                elif self.road[i,j]==11:
+                    color = GREEN
                 elif self.road[i,j]==0:
                     color = WHITE
                 pygame.draw.rect(win,color=color,rect=(self.x + i*self.spacing,self.y + j*self.spacing,self.width,self.width))
@@ -109,7 +131,7 @@ def make_grid(rmap,save_grid = False):
     for i in range(rmap.shape[0]):
         for j in range(rmap.shape[1]):
             grid = rmap[i,j].add_to_grid(grid)
-    if save_grid :np.save("map_grid",grid.T)  
+    if save_grid :np.save("map_dir",grid.T)  
     return grid.T
 
 
@@ -122,11 +144,11 @@ def make_grid(rmap,save_grid = False):
 
 win = pygame.display.set_mode((win_width,win_width))
 pygame.display.set_caption("Simulator_V0")
-
+path = os.path.abspath(os.path.dirname(__file__))
 def main():
-    path = os.getcwd()
+    #path = os.getcwd()
 
-    file = open(path+'/src/Simulator/map.pkl','rb')
+    file = open(path+'\map.pkl','rb')
     rmap = pickle.load(file)
     row = 0
     col = 0
@@ -182,6 +204,20 @@ def main():
                     rmap[row][col].rotate()
                     rmap[row,col].draw(win)
 
+                # Choose path as Up
+                if ev.key == pygame.K_w:
+                    rmap[row][col].is_up()
+                    rmap[row,col].draw(win)
+                if ev.key == pygame.K_s:
+                    rmap[row][col].is_down()
+                    rmap[row,col].draw(win)
+                if ev.key == pygame.K_a:
+                    rmap[row][col].is_left()
+                    rmap[row,col].draw(win)
+                if ev.key == pygame.K_f:
+                    rmap[row][col].is_right()
+                    rmap[row,col].draw(win)
+                        
                 rmap[row,col].draw_pointer(win)
 
 
