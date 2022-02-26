@@ -11,7 +11,7 @@ GREEN = (0,255,0)
 class Grid_tile():
     """
     This class will give you the behaviour of each tile on the grid.
-    type : type of tile can be CAR, ROAD, OBSTACLE
+    type : type of tile can be CAR, ROAD, OBSTACLE which will be indicated by the color of the tile
 
 
     """
