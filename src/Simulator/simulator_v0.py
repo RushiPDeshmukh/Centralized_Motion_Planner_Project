@@ -129,11 +129,6 @@ def store(rmap):
         output.write(str(list_map))
 
 
-
-
-
-
-
 def make_grid(rmap,save_grid = False):
     empty_grid = np.zeros((rmap.shape[0]*3,rmap.shape[1]*3))
     for i in range(rmap.shape[0]):
@@ -141,14 +136,6 @@ def make_grid(rmap,save_grid = False):
             grid = rmap[i,j].add_to_grid(grid)
     if save_grid :np.save("map_dir",grid.T)  
     return grid.T
-
-
-
-
-
-
-
-    
 
 win = pygame.display.set_mode((win_width,win_width))
 pygame.display.set_caption("Simulator_V0")
