@@ -1,6 +1,7 @@
 import pygame
 import numpy as np
 import pickle
+import os
 
 
 
@@ -123,7 +124,9 @@ win = pygame.display.set_mode((win_width,win_width))
 pygame.display.set_caption("Simulator_V0")
 
 def main():
-    file = open('map.pkl','rb')
+    path = os.getcwd()
+
+    file = open(path+'/src/Simulator/map.pkl','rb')
     rmap = pickle.load(file)
     row = 0
     col = 0
@@ -182,7 +185,7 @@ def main():
                 rmap[row,col].draw_pointer(win)
 
 
-# main() 
+main() 
         
 
 
