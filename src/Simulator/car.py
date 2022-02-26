@@ -3,10 +3,10 @@ import numpy as np
 from grid import *
 
 class car():
-    def __init__(self,t):
-        self.start_position = 'random_start_position'
-        self.goal_position = 'random_goal_position'
-        self.position = get_position(t)
+    def __init__(self,t,start_pos,goal_pos):
+        self.start_position = start_pos
+        self.goal_position = goal_pos
+        self.position = self.get_position(t)
         self.speed = 1
         self.initial_time = t
 
