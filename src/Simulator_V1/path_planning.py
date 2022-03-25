@@ -1,7 +1,8 @@
+from copyreg import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 import pygame
-
+from queue import PriorityQueue
 
 class path_plan():
     def __init__(self, car, map):

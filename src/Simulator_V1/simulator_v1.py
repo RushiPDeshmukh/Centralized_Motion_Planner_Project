@@ -105,10 +105,10 @@ def main():
     path = os.path.abspath(os.path.dirname(__file__))
     
 
-    # file = open(path+'\map.pkl','w+')
-    # rmap = pickle.load(file)
+    file = open(path+'\map.pkl','rb')
+    rmap = pickle.load(file)
 
-    rmap = init_map(block_width,win_width)
+    # rmap = init_map(block_width,win_width)
     row = 0
     col = 0
     episode = True
@@ -165,7 +165,8 @@ def main():
             rmap[row,col].draw_pointer(win)            
             draw_map(win,rmap)
 
-main() 
+if __name__  =="__main__":
+    main() 
         
 
 
