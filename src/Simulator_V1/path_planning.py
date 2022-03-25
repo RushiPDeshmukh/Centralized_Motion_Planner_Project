@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pygame
+
+
 class path_plan():
     def __init__(self, car, map):
         """
@@ -49,5 +51,4 @@ class path_plan():
         if self.col > 0 and not self.is_road(self.map[self.row][self.col - 1]): # LEFT
             if self.map[self.row][self.col - 1].dir == 'left':
                 self.neighbors.append(self.map[self.row][self.col - 1])
-
-    
+        #return self.neighbours
