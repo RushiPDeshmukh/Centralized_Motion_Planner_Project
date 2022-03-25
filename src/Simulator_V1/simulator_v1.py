@@ -90,13 +90,6 @@ def draw_map(win, map):
 def store(rmap):
     file = open('map.pkl','wb')
     pickle.dump(rmap,file)
-    list_map = []
-    for i in range(rmap.shape[0]):
-        for j in range(rmap.shape[1]):
-            rmap[i,j].add_state(list_map)
-
-    with open("list_map.txt","w") as output:
-        output.write(str(list_map))
 
 
 
@@ -162,7 +155,7 @@ def main():
                     if road_toggle: rmap[row,col].change_type("road")
 
                 #Save the rmap 
-                if ev.key ==pygame.K_c:
+                if ev.key ==pygame.K_s:
                     store(rmap)
             rmap[row,col].draw_pointer(win)            
             draw_map(win,rmap)
