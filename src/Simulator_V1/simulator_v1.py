@@ -87,7 +87,7 @@ def draw_map(win, map):
     pygame.display.update()
 
 def store(rmap):
-    file = open(path+'map.pkl','wb')
+    file = open(path+'\map.pkl','wb')
     pickle.dump(rmap,file)
 
 
