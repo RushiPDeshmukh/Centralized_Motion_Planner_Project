@@ -102,6 +102,7 @@ def main():
     win = pygame.display.set_mode(size = (win_width*2,win_width))
     pygame.display.set_caption("Simulator_V1")
     
+    path = os.path.abspath(os.path.dirname(__file__))
     
 
     # file = open(path+'\map.pkl','w+')
