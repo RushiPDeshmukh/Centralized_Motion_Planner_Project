@@ -1,4 +1,3 @@
-from importlib.resources import path
 import pygame
 import numpy as np
 import pickle
@@ -90,7 +89,16 @@ def draw_map(win, map):
             map[i][j].draw(win)
     pygame.display.update()
 
+def store(rmap):
+    file = open('map.pkl','wb')
+    pickle.dump(rmap,file)
+    list_map = []
+    for i in range(rmap.shape[0]):
+        for j in range(rmap.shape[1]):
+            rmap[i,j].add_state(list_map)
 
+    with open("list_map.txt","w") as output:
+        output.write(str(list_map))
 
 
 
@@ -100,6 +108,10 @@ def main():
     pygame.display.set_caption("Simulator_V1")
     
     path = os.path.abspath(os.path.dirname(__file__))
+
+    # file = open(path+'\map.pkl','w+')
+    # rmap = pickle.load(file)
+
     rmap = init_map(block_width,win_width)
     row = 0
     col = 0
@@ -150,6 +162,10 @@ def main():
                     if row+1 < win_width*2/block_width:
                         row += 1
                     if road_toggle: rmap[row,col].change_type("road")
+
+                #Save the rmap 
+                if ev.key ==pygame.K_c:
+                    store(rmap)
             rmap[row,col].draw_pointer(win)            
             draw_map(win,rmap)
 
