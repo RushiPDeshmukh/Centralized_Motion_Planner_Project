@@ -1,59 +1,10 @@
-from copyreg import pickle
-import numpy as np
-import matplotlib.pyplot as plt
 import pygame
+import math
 from queue import PriorityQueue
 
-class path_plan():
-    def __init__(self, car, map):
-        """
-        Takes in the car object and the map object to calculate the path for the car in the map given.
-        """
-        self.car = car
-        self.map = map
-    
-    def get_start_end(self):
-        self.start_end_nodes = []
-        # If it is a house or a complex it can be a start or end node for the car.
-        # Looping over the map to get start and end node
-        for i in self.map:
-            if i.rtype == 'house':
-                self.start_end_nodes.append(i)
-            if i.rtype == 'complex':
-                self.start_end_nodes.append(i)
-            else:
-                pass
-        #return self.start_end_nodes
-        
-    def is_road(node):
-        if node.rtype == 'road':
-            return True
-        else:
-            return False
-
-    def add_neighbours(self):
-        self.neighbours = []
-        #We need to know current car directon too to check if it is going in the right direction. ?????????
-        if self.row < self.total_rows - 1 and self.is_road(self.map[self.row + 1][self.col]): # DOWN
-            if self.map[self.row + 1][self.col].dir == 'down':
-                self.neighbors.append(self.map[self.row + 1][self.col])
-        
-        
-        if self.row > 0 and self.is_road(self.map[self.row - 1][self.col]): # UP
-            if self.map[self.row - 1][self.col].dir == 'up':
-                self.neighbors.append(self.map[self.row - 1][self.col])
-        
-        
-        if self.col < self.total_rows - 1 and self.is_road(self.map[self.row][self.col + 1]): # RIGHT
-            if self.map[self.row][self.col + 1].dir == 'right':
-                self.neighbors.append(self.map[self.row][self.col + 1])
-        
-        
-        if self.col > 0 and not self.is_road(self.map[self.row][self.col - 1]): # LEFT
-            if self.map[self.row][self.col - 1].dir == 'left':
-                self.neighbors.append(self.map[self.row][self.col - 1])
-
-
+WIDTH = 800
+WIN = pygame.display.set_mode((WIDTH, WIDTH))
+pygame.display.set_caption("A* Path Finding Algorithm")
 
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
@@ -195,5 +146,100 @@ def algorithm(draw, grid, start, end):
 
 	return False
 
-#city = pickle.load('map.pkl')
-#algorithm(lambda: draw(win, grid, ROWS, width), grid, start, end)
+
+def make_grid(rows, width):
+	grid = []
+	gap = width // rows
+	for i in range(rows):
+		grid.append([])
+		for j in range(rows):
+			spot = Spot(i, j, gap, rows)
+			grid[i].append(spot)
+
+	return grid
+
+
+def draw_grid(win, rows, width):
+	gap = width // rows
+	for i in range(rows):
+		pygame.draw.line(win, GREY, (0, i * gap), (width, i * gap))
+		for j in range(rows):
+			pygame.draw.line(win, GREY, (j * gap, 0), (j * gap, width))
+
+
+def draw(win, grid, rows, width):
+	win.fill(WHITE)
+
+	for row in grid:
+		for spot in row:
+			spot.draw(win)
+
+	draw_grid(win, rows, width)
+	pygame.display.update()
+
+
+def get_clicked_pos(pos, rows, width):
+	gap = width // rows
+	y, x = pos
+
+	row = y // gap
+	col = x // gap
+
+	return row, col
+
+
+def main(win, width):
+	ROWS = 50
+	grid = make_grid(ROWS, width)
+
+	start = None
+	end = None
+
+	run = True
+	while run:
+		draw(win, grid, ROWS, width)
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				run = False
+
+			if pygame.mouse.get_pressed()[0]: # LEFT
+				pos = pygame.mouse.get_pos()
+				row, col = get_clicked_pos(pos, ROWS, width)
+				spot = grid[row][col]
+				if not start and spot != end:
+					start = spot
+					start.make_start()
+
+				elif not end and spot != start:
+					end = spot
+					end.make_end()
+
+				# elif spot != end and spot != start:
+				# 	spot.make_barrier()
+
+			elif pygame.mouse.get_pressed()[2]: # RIGHT
+				pos = pygame.mouse.get_pos()
+				row, col = get_clicked_pos(pos, ROWS, width)
+				spot = grid[row][col]
+				spot.reset()
+				if spot == start:
+					start = None
+				elif spot == end:
+					end = None
+
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_SPACE and start and end:
+					for row in grid:
+						for spot in row:
+							spot.update_neighbors(grid)
+
+					algorithm(lambda: draw(win, grid, ROWS, width), grid, start, end)
+
+				if event.key == pygame.K_c:
+					start = None
+					end = None
+					grid = make_grid(ROWS, width)
+
+	pygame.quit()
+
+#main(WIN, WIDTH)
