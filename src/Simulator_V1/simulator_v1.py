@@ -60,8 +60,7 @@ class Blocks:
         elif self.rtype == "complex":
             pygame.draw.rect(win,YELLOW,rect=(self.x,self.y,self.width*2,self.width*2),border_radius=8)
             pygame.draw.circle(win,DARK_YELLOW,(self.x+self.width,self.y+self.width),self.width,5)
-        else:
-            pygame.draw.rect(win,self.color,rect=(self.x,self.y,self.width,self.width))
+        
 
     def draw_pointer(self,win):
         pygame.draw.rect(win,TURQUISE,pygame.Rect(self.x,self.y,self.width,self.width),2)
