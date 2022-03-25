@@ -31,6 +31,7 @@ block_width = 20
 class Blocks:
     def __init__(self, row, col, block_width):
         self.rtype = 'off_road'
+        self.dir = 'SE'
         self.row = row
         self.col = col
         self.x = row * block_width
@@ -58,12 +59,6 @@ class Blocks:
         elif self.rtype == "complex":
             pygame.draw.rect(win,YELLOW,rect=(self.x,self.y,self.width*2,self.width*2),border_radius=8)
             pygame.draw.circle(win,DARK_YELLOW,(self.x+self.width,self.y+self.width),self.width,5)
-
-        
-
-        
-        
-        
 
     def draw_pointer(self,win):
         pygame.draw.rect(win,TURQUISE,pygame.Rect(self.x,self.y,self.width,self.width),2)
