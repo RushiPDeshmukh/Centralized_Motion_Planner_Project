@@ -6,11 +6,13 @@ import random
 
 ################ This version is to make the map look like a mini motorways sim ##################
 
-
+path = os.path.abspath(os.path.dirname(__file__))
 RED = (255,0,0)
 DARK_RED = (200,0,0)
 GREEN = (0,255,0)
+DARK_GREEN = (0,200,0)
 BLUE = (0,0,255)
+DARK_BLUE = (0,0,200)
 WHITE = (255,255,255)
 BLACK = (0,0,0)
 TURQUISE = (64,224,208)
@@ -43,6 +45,7 @@ class Blocks:
         self.bottom_left = -1
         self.bottom_right = -1
         self.neighbours = []
+    
         
 
     def change_type(self, t):
@@ -52,13 +55,17 @@ class Blocks:
         if self.rtype == "road":
             pygame.draw.rect(win,GREY,rect=(self.x,self.y,self.width,self.width),border_top_left_radius=self.top_left,border_top_right_radius=self.top_right,border_bottom_left_radius=self.bottom_left,border_bottom_right_radius=self.bottom_right)
         elif self.rtype == "house":
-            color1 = RED
-            color2 = DARK_RED
+            colors = [RED,BLUE,GREEN]
+            dark_colors = [DARK_RED,DARK_BLUE,DARK_GREEN]
+            rand_color = np.random.randint(0,3)
+            color1 = colors[rand_color]
+            color2 = dark_colors[rand_color]
             pygame.draw.rect(win,color1,rect=(self.x,self.y,self.width,self.width/2))
             pygame.draw.rect(win,color2,rect=(self.x,self.y+(self.width/2),self.width,self.width/2))
         elif self.rtype == "complex":
             pygame.draw.rect(win,YELLOW,rect=(self.x,self.y,self.width*2,self.width*2),border_radius=8)
             pygame.draw.circle(win,DARK_YELLOW,(self.x+self.width,self.y+self.width),self.width,5)
+        
 
     def draw_pointer(self,win):
         pygame.draw.rect(win,TURQUISE,pygame.Rect(self.x,self.y,self.width,self.width),2)
@@ -85,15 +92,8 @@ def draw_map(win, map):
     pygame.display.update()
 
 def store(rmap):
-    file = open('map.pkl','wb')
+    file = open(path+'\map.pkl','wb')
     pickle.dump(rmap,file)
-    list_map = []
-    for i in range(rmap.shape[0]):
-        for j in range(rmap.shape[1]):
-            rmap[i,j].add_state(list_map)
-
-    with open("list_map.txt","w") as output:
-        output.write(str(list_map))
 
 
 
@@ -103,6 +103,7 @@ def main():
     pygame.display.set_caption("Simulator_V1")
     
     path = os.path.abspath(os.path.dirname(__file__))
+    
 
     # file = open(path+'\map.pkl','w+')
     # rmap = pickle.load(file)
@@ -159,7 +160,7 @@ def main():
                     if road_toggle: rmap[row,col].change_type("road")
 
                 #Save the rmap 
-                if ev.key ==pygame.K_c:
+                if ev.key ==pygame.K_s:
                     store(rmap)
             rmap[row,col].draw_pointer(win)            
             draw_map(win,rmap)
