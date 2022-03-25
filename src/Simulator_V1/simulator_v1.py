@@ -6,7 +6,7 @@ import random
 
 ################ This version is to make the map look like a mini motorways sim ##################
 
-
+path = os.path.abspath(os.path.dirname(__file__))
 RED = (255,0,0)
 DARK_RED = (200,0,0)
 GREEN = (0,255,0)
@@ -43,7 +43,7 @@ class Blocks:
         self.bottom_left = -1
         self.bottom_right = -1
         self.neighbours = []
-        self.color = BG_COLOR
+    
         
 
     def change_type(self, t):
@@ -87,7 +87,7 @@ def draw_map(win, map):
     pygame.display.update()
 
 def store(rmap):
-    file = open('map.pkl','wb')
+    file = open(path+'map.pkl','wb')
     pickle.dump(rmap,file)
 
 
@@ -97,7 +97,7 @@ def main():
     win = pygame.display.set_mode(size = (win_width*2,win_width))
     pygame.display.set_caption("Simulator_V1")
     
-    path = os.path.abspath(os.path.dirname(__file__))
+    
 
     # file = open(path+'\map.pkl','w+')
     # rmap = pickle.load(file)
