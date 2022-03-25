@@ -191,6 +191,7 @@ def main():
                 if ev.key == pygame.K_RIGHT:
                     if row+1 < win_width/block_width:
                         row += 1
+                #Save the map
                 if ev.key ==pygame.K_c:
                     store(rmap)
 
