@@ -1,2 +1,0 @@
-set(car_MESSAGE_FILES "/media/piyush/BlackHole/WPI/Motion Planning course/Project/ROS_ws/src/car/msg/planner_msg.msg")
-set(car_SERVICE_FILES "")

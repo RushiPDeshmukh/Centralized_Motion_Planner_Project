@@ -1,2 +1,0 @@
-car
--DCATKIN_DEVEL_PREFIX=/media/piyush/BlackHole/WPI/Motion Planning course/Project/ROS_ws/devel -DCMAKE_INSTALL_PREFIX=/media/piyush/BlackHole/WPI/Motion Planning course/Project/ROS_ws/install -G Unix Makefiles

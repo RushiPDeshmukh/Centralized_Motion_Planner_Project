@@ -1,8 +1,0 @@
-prefix=/media/piyush/BlackHole/WPI/Motion Planning course/Project/ROS_ws/devel
-
-Name: car
-Description: Description of car
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
