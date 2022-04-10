@@ -2,6 +2,7 @@
 import math
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 show_animation = True
 
@@ -17,13 +18,15 @@ class AStarPlanner:
         resolution: grid resolution [m]
         rr: robot radius[m]
         """
-        self.map_path = 'map3.npy'
+        map_path = '\map3.npy'
+        dir_path = os.path.abspath(os.path.dirname(__file__))
+        path = dir_path + map_path
         self.resolution = 1
-        self.rr = 1
+        self.rr = 0
         self.min_x, self.min_y = 0, 0
-        self.map_array =  np.load(self.map_path)
-        self.obstacle_map = np.load(self.map_path).astype(np.int32).tolist()
-        self.ox,self.oy = obstacles(self.map_path)
+        self.map_array =  np.load(path)
+        self.obstacle_map = np.load(path).astype(np.int32).tolist()
+        self.ox,self.oy = obstacles(path)
         self.max_x, self.max_y =  self.map_array.shape[0], self.map_array.shape[1]
         self.x_width, self.y_width = 1, 1
         self.motion = self.get_motion_model()
@@ -221,18 +224,22 @@ def obstacles(map_path):
     ox = O[:,0].astype(np.int32).tolist()
     oy = O[:,1].astype(np.int32).tolist()
 
+    min_x = -1
+    min_y = -1
+    max_x = space.shape[0] + 1
+    max_y = space.shape[1] + 1 
     # add boundaries
-    for i in range(-1, 51):
+    for i in range(min_x, max_x):
         ox.append(i)
-        oy.append(-1)
-    for i in range(-1, 51):
-        ox.append(51)
+        oy.append(min_y)
+    for i in range(min_x, max_x):
+        ox.append(i)
+        oy.append(max_y)
+    for i in range(min_y, max_y):
+        ox.append(min_x)
         oy.append(i)
-    for i in range(-1, 51):
-        ox.append(i)
-        oy.append(51)
-    for i in range(-1, 51):
-        ox.append(-1)
+    for i in range(min_y, max_y):
+        ox.append(max_x)
         oy.append(i)
     return ox,oy
 
@@ -261,7 +268,7 @@ def main(sx,sy,gx,gy):
 if __name__ == '__main__':
     sx = 30  # [m]
     sy = 30  # [m]
-    gx = 10  # [m]
-    gy = 10  # [m]
+    gx = 13  # [m]
+    gy = 13  # [m]
     main(sx,sy,gx,gy)
     main(gx,gy,sx,sy)
