@@ -136,8 +136,9 @@ class AStarPlanner:
             rx.append(self.calc_grid_position(n.x, self.min_x))
             ry.append(self.calc_grid_position(n.y, self.min_y))
             parent_index = n.parent_index
-
-        return rx, ry
+        rx_s2g = np.flip(rx)
+        ry_s2g = np.flip(ry)
+        return rx_s2g, ry_s2g
 
     @staticmethod
     def calc_heuristic(n1, n2):
@@ -208,11 +209,11 @@ class AStarPlanner:
         motion = [[1, 0, 1],
                   [0, 1, 1],
                   [-1, 0, 1],
-                  [0, -1, 1],
-                  [-1, -1, math.sqrt(2)],
-                  [-1, 1, math.sqrt(2)],
-                  [1, -1, math.sqrt(2)],
-                  [1, 1, math.sqrt(2)]]
+                  [0, -1, 1]]
+                #   [-1, -1, math.sqrt(2)],
+                #   [-1, 1, math.sqrt(2)],
+                #   [1, -1, math.sqrt(2)],
+                #   [1, 1, math.sqrt(2)]]
 
         return motion
 
