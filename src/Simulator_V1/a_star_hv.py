@@ -17,13 +17,14 @@ class AStarPlanner:
         resolution: grid resolution [m]
         rr: robot radius[m]
         """
-
-        self.ox,self.oy = obstacles()
+        self.map_path = 'map3.npy'
         self.resolution = 1
         self.rr = 1
         self.min_x, self.min_y = 0, 0
-        self.max_x, self.max_y = 60, 60
-        self.obstacle_map = np.load('map_grid.npy').astype(np.int32).tolist()
+        self.map_array =  np.load(self.map_path)
+        self.obstacle_map = np.load(self.map_path).astype(np.int32).tolist()
+        self.ox,self.oy = obstacles(self.map_path)
+        self.max_x, self.max_y =  self.map_array.shape[0], self.map_array.shape[1]
         self.x_width, self.y_width = 1, 1
         self.motion = self.get_motion_model()
         self.calc_obstacle_map(self.ox, self.oy)
@@ -210,15 +211,17 @@ class AStarPlanner:
         return motion
 
 
-def obstacles():
+def obstacles(map_path):
     ox = []
     oy = []
 
-    space = np.load('map_grid.npy')
+    space = np.load(map_path)
+
     O = np.argwhere(space<1)
     ox = O[:,0].astype(np.int32).tolist()
     oy = O[:,1].astype(np.int32).tolist()
 
+    # add boundaries
     for i in range(-1, 51):
         ox.append(i)
         oy.append(-1)
