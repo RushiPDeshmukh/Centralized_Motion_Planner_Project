@@ -1,4 +1,4 @@
-# import pygame
+import pygame
 import math
 from queue import PriorityQueue
 
@@ -214,8 +214,8 @@ def main(win, width):
 					end = spot
 					end.make_end()
 
-				# elif spot != end and spot != start:
-				# 	spot.make_barrier()
+				elif spot != end and spot != start:
+					spot.make_barrier()
 
 			elif pygame.mouse.get_pressed()[2]: # RIGHT
 				pos = pygame.mouse.get_pos()
@@ -242,4 +242,4 @@ def main(win, width):
 
 	pygame.quit()
 
-#main(WIN, WIDTH)
+main(WIN, WIDTH)
