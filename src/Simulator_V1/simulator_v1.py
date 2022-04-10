@@ -91,9 +91,18 @@ def draw_map(win, map):
             map[i][j].draw(win)
     pygame.display.update()
 
-def store(rmap):
-    file = open(path+'\map.pkl','wb')
-    pickle.dump(rmap,file)
+def store(rmap,path,np_grid=False):
+    if np_grid:
+        grid = np.zeros(rmap.shape)
+        row_map, col_map = rmap.shape
+        for i in range(row_map):
+            for j in range(col_map):
+                grid[i][j] = 1 if rmap[i][j].rtype == "road" else 0
+        np.save(path+'//grid_map.npy',grid)
+        print("Grid_Map Saved!")
+    else:
+        file = open(path+'\map.pkl','wb')
+        pickle.dump(rmap,file)
 
 
 
@@ -104,11 +113,10 @@ def main():
     
     path = os.path.abspath(os.path.dirname(__file__))
     
-
-    file = open(path+'\map.pkl','rb')
+    file = open(path+'/map.pkl','rb')
     rmap = pickle.load(file)
-
-    # rmap = init_map(block_width,win_width)
+    store(rmap,path,True)
+    rmap = init_map(block_width,win_width)
     row = 0
     col = 0
     episode = True
