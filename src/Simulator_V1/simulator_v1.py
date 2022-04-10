@@ -92,12 +92,23 @@ def store(rmap,path,np_grid=False):
         row_map, col_map = rmap.shape
         for i in range(row_map):
             for j in range(col_map):
-                grid[i][j] = 1 if rmap[i][j].rtype == "road" else 0
+                grid[i][j] = 1 if rmap[i][j].rtype == "off_road" else 0
         np.save(path+'//grid_map.npy',grid)
         print("Grid_Map Saved!")
     else:
         file = open(path+'//map.pkl','wb')
         pickle.dump(rmap,file)
+
+def store_nodes(rmap):
+    list_nodes = []
+    row_map, col_map = rmap.shape
+    for i in range(row_map):
+        for j in range(col_map):
+            if rmap[i][j].rtype == "house" or rmap[i][j].rtype == "complex" :
+                list_nodes.append((i,j))
+    list_nodes = np.array(list_nodes)
+    np.save(path+'//dest_node.npy',list_nodes)
+    print("List of  Saved!")
 
 def main(rmap = None,save_np = False):
     """loads the rmap pickle file and visualizes the map in pygame env.
@@ -114,6 +125,7 @@ def main(rmap = None,save_np = False):
         rmap = init_map(block_width,win_width)
     if save_np:
         store(rmap,path,True)
+        store_nodes(rmap)
 
     row = 0
     col = 0
@@ -172,7 +184,7 @@ def main(rmap = None,save_np = False):
             draw_map(win,rmap)
 
 if __name__  =="__main__":
-    main() 
+    main(None,True) 
         
 
 
