@@ -4,8 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-show_animation = True
-
+# show_animation = True
+show_animation = False
 
 class AStarPlanner:
 
@@ -18,15 +18,15 @@ class AStarPlanner:
         resolution: grid resolution [m]
         rr: robot radius[m]
         """
-        map_path = '\map3.npy'
+        map_path = '\grid_map.npy'
         dir_path = os.path.abspath(os.path.dirname(__file__))
         path = dir_path + map_path
         self.resolution = 1
         self.rr = 0
         self.min_x, self.min_y = 0, 0
         self.map_array =  np.load(path)
-        self.obstacle_map = np.load(path).astype(np.int32).tolist()
-        self.ox,self.oy = obstacles(path)
+        self.obstacle_map = self.map_array.astype(np.int32).tolist()
+        self.ox,self.oy = obstacles(self.map_array)
         self.max_x, self.max_y =  self.map_array.shape[0], self.map_array.shape[1]
         self.x_width, self.y_width = 1, 1
         self.motion = self.get_motion_model()
@@ -182,22 +182,25 @@ class AStarPlanner:
         return True
 
     def calc_obstacle_map(self, ox, oy):
-
+        pass
         self.x_width = round((self.max_x - self.min_x) / self.resolution)
         self.y_width = round((self.max_y - self.min_y) / self.resolution)
 
         # obstacle map generation
         self.obstacle_map = [[False for _ in range(self.y_width)]
                              for _ in range(self.x_width)]
+
         for ix in range(self.x_width):
-            x = self.calc_grid_position(ix, self.min_x)
+        #     x = self.calc_grid_position(ix, self.min_x)
             for iy in range(self.y_width):
-                y = self.calc_grid_position(iy, self.min_y)
-                for iox, ioy in zip(ox, oy):
-                    d = math.hypot(iox - x, ioy - y)
-                    if d <= self.rr:
-                        self.obstacle_map[ix][iy] = True
-                        break
+        #         y = self.calc_grid_position(iy, self.min_y)
+                if self.map_array[ix,iy] == 0:
+                    self.obstacle_map[ix][iy] = True
+        #         for iox, ioy in zip(ox, oy):
+        #             d = math.hypot(iox - x, ioy - y)
+        #             if d <= self.rr:
+        #                 self.obstacle_map[ix][iy] = True
+        #                 break
 
     @staticmethod
     def get_motion_model():
@@ -214,33 +217,31 @@ class AStarPlanner:
         return motion
 
 
-def obstacles(map_path):
+def obstacles(map_array):
     ox = []
     oy = []
-
-    space = np.load(map_path)
-
-    O = np.argwhere(space<1)
+    O = np.argwhere(map_array<1)
     ox = O[:,0].astype(np.int32).tolist()
     oy = O[:,1].astype(np.int32).tolist()
 
-    min_x = -1
-    min_y = -1
-    max_x = space.shape[0] + 1
-    max_y = space.shape[1] + 1 
-    # add boundaries
-    for i in range(min_x, max_x):
-        ox.append(i)
-        oy.append(min_y)
-    for i in range(min_x, max_x):
-        ox.append(i)
-        oy.append(max_y)
-    for i in range(min_y, max_y):
-        ox.append(min_x)
-        oy.append(i)
-    for i in range(min_y, max_y):
-        ox.append(max_x)
-        oy.append(i)
+    # # add boundaries if the space is open
+    # min_x = -1
+    # min_y = -1
+    # max_x = map_array.shape[0] + 1
+    # max_y = map_array.shape[1] + 1 
+    # for i in range(min_x, max_x):
+    #     ox.append(i)
+    #     oy.append(min_y)
+    # for i in range(min_x, max_x):
+    #     ox.append(i)
+    #     oy.append(max_y)
+    # for i in range(min_y, max_y):
+    #     ox.append(min_x)
+    #     oy.append(i)
+    # for i in range(min_y, max_y):
+    #     ox.append(max_x)
+    #     oy.append(i)
+    
     return ox,oy
 
 
@@ -252,7 +253,7 @@ def main(sx,sy,gx,gy):
         plt.plot(a_star.ox, a_star.oy, ".k")
         plt.plot(sx, sy, "og")
         plt.plot(gx, gy, "xb")
-        plt.grid(True)
+        # plt.grid(True)
         plt.axis("equal")
     rx, ry = a_star.planning(sx, sy, gx, gy)
 
@@ -266,9 +267,19 @@ def main(sx,sy,gx,gy):
     return path
 
 if __name__ == '__main__':
-    sx = 30  # [m]
-    sy = 30  # [m]
+    sx = 31  # [m]
+    sy = 31  # [m]
     gx = 13  # [m]
     gy = 13  # [m]
+
     main(sx,sy,gx,gy)
-    main(gx,gy,sx,sy)
+    # main(gx,gy,sx,sy)
+    
+    # import time
+    # tic = time.time()
+    # for i in range(50):
+    #     main(sx,sy,gx,gy)
+    #     main(gx,gy,sx,sy)
+    #     print(2*i)
+    # toc = time.time()
+    # print('Time for 100 searches:',np.round(toc-tic))
