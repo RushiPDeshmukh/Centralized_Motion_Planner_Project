@@ -92,7 +92,7 @@ def store(rmap,path,np_grid=False):
         row_map, col_map = rmap.shape
         for i in range(row_map):
             for j in range(col_map):
-                grid[i][j] = 1 if rmap[i][j].rtype == "off_road" else 0
+                grid[i][j] = 1 if rmap[i][j].rtype != "off_road" else 0
         np.save(path+'//grid_map.npy',grid)
         print("Grid_Map Saved!")
     else:
