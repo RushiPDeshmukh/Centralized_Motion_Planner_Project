@@ -3,6 +3,8 @@ import numpy as np
 import pickle
 import os
 import random 
+from Map_editor import *
+from collections import defaultdict
 
 
 
@@ -28,69 +30,53 @@ ORANGE = (255,165,0)
 GREY = (50,50,50)
 YELLOW = (255,215,11)
 DARK_YELLOW = (250,180,10)
+# win is the main display of the simulator
+win = pygame.display.set_mode(size = (win_width*2,win_width))
+pygame.display.set_caption("Simulator_V1")
 
+#loading the map of the city from the map.pkl
+path = os.path.abspath(os.path.dirname(__file__))
+file = open(path+'/map.pkl','rb')
+rmap = pickle.load(file)
 
-if __name__ == "__main__":
+#dictionary variable to store the instances of cars
+car_list = defaultdict()
 
-    win = pygame.display.set_mode(size = (win_width*2,win_width))
-    pygame.display.set_caption("Simulator_V1")
+class CAR:
+    #This class will store the current cars in the env and its location. From the ros service we will update this location
+    def __init__(self,pos,id,t) -> None:
+        self.id = id
+        self.pos = pos
+        self.t = t
+
+    def update_pos(self,pos,t):
+        self.pos = pos
+        self.t
+        return True
     
-    path = os.path.abspath(os.path.dirname(__file__))
-    file = open(path+'/map.pkl','rb')
-    rmap = pickle.load(file)
+    def draw(self,win):
+        car_rect = pygame.Rect(self.pos[0],self.pos[1],block_width,block_width)
+        pygame.draw.rect(win,ORANGE,car_rect)
+        pygame.display.update()
 
-    row = 0
-    col = 0
-    episode = True
-    road_toggle = False
-    while episode:
-        
-        for ev in pygame.event.get():
-            if ev.type == pygame.QUIT:
-                pygame.quit()
-                episode = False
-            if pygame.mouse.get_pressed()[0]: #LEFT_Click
-                pos = pygame.mouse.get_pos()
-                row, col = (pos[0]//block_width,pos[1]//block_width)
-            if pygame.mouse.get_pressed()[1]:#RIGHT_Click
-                pos = pygame.mouse.get_pos()
-                rmap[pos[0]//block_width][pos[1]//block_width].change_type("house")
-            #Change Type of the block  
-            if ev.type == pygame.KEYDOWN:  
-                if ev.key == pygame.K_r:
-                    road_toggle = not road_toggle
-                if ev.key == pygame.K_i:
-                    rmap[row,col].change_type("road")
-                    
-                if ev.key == pygame.K_h:
-                    rmap[row,col].change_type("house")
-                     
-                if ev.key == pygame.K_c:
-                    rmap[row,col].change_type("complex")
-                if ev.key == pygame.K_d:
-                    rmap[row,col].change_type("off_road")
-                
+def render(win,rmap,car_data,car_list): 
+    draw_map(win,rmap)
+    car_id,pos,t = car_data
+    
+    if car_id in car_list.keys():
+        car_list[car_id].update_pos(pos,t)
+    else:
+        car_list[car_id] = CAR(pos,car_id,t)
+    
+    for _,c in car_list.items():
+        c.draw(win)
+    
 
-                #Move accros the map    
-                if ev.key == pygame.K_UP:
-                    if col-1 >= 0:
-                        col -= 1
-                    if road_toggle: rmap[row,col].change_type("road")
-                if ev.key == pygame.K_DOWN:
-                    if col+1 < win_width/block_width:
-                        col +=1
-                    if road_toggle: rmap[row,col].change_type("road")
-                if ev.key == pygame.K_LEFT:
-                    if row-1 >= 0:
-                        row -= 1
-                    if road_toggle: rmap[row,col].change_type("road")
-                if ev.key == pygame.K_RIGHT:
-                    if row+1 < win_width*2/block_width:
-                        row += 1
-                    if road_toggle: rmap[row,col].change_type("road")
 
-                #Save the rmap 
-                if ev.key ==pygame.K_s:
-                    store(rmap,path)
-            rmap[row,col].draw_pointer(win)            
-            draw_map(win,rmap)
+
+
+
+
+if __name__ == '__main__':
+    render(win,rmap,(0,(0,0),1),car_list)
+    pygame.time.delay(20000)

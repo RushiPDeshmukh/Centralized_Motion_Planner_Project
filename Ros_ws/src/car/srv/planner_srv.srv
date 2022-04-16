@@ -1,5 +1,5 @@
-int64 start
-int64 end
+int64[2] start
+int64[2] end
 ---
-int64 path
+int64[] path
 
