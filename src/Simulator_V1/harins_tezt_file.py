@@ -12,7 +12,7 @@ rmap =  pickle.load(file)
 
 s,g = car_gen.main()
 path = a_star.main(s,g)
-print(path)
+# print(path)
 for i in range(path.shape[0]):
     tuple = (0,(block_width*path[i,0],block_width*path[i,1]),1)
     # print(tuple)

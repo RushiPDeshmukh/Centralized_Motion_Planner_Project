@@ -80,6 +80,6 @@ def render(win,rmap,car_data,car_list):
 
 
 
-if __name__ == '__main__':
-    render(win,rmap,(0,(0,0),1),car_list)
-    pygame.time.delay(20000)
+# if __name__ == '__main__':
+#     render(win,rmap,(0,(0,0),1),car_list)
+#     pygame.time.delay(20000)
