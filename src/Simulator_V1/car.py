@@ -42,7 +42,7 @@ class CAR:
         self.goal_position
 
 
-def start_goal_pos():
+def start_goal_pos_gen():
     '''
     chooses random start and goal location on the map
     'dest.node' is a numpy array of all points that can be start or goal positions
@@ -61,7 +61,7 @@ def start_goal_pos():
     return start_pos, goal_pos
 
 
-s,g = start_goal_pos()
+s,g = start_goal_pos_gen()
 print(s,g)
 # car1 = CAR(t = 0, start_pos = s, goal_pos = g, ID = 1)
 # car1.get_path()
