@@ -2,7 +2,7 @@ import pygame
 import numpy as np
 from grid import *
 
-class car():
+class CAR:
     def __init__(self,t,start_pos,goal_pos,ID):
         self.ID = ID
         self.start_position = start_pos
@@ -29,3 +29,19 @@ class car():
         delta_t = t - self.initial_time         # to calculate the position of the car with respect to the time it spwaned
         x_pos,y_pos = self.path[delta_t]
         return x_pos,y_pos
+
+    def get_path(self):
+        ''''''
+
+
+def start_goal_pos():
+    locations = np.load('dest_node')
+    start_index = np.random.randint(locations.shape[0])
+    end_index = np.random.randint(locations.shape[0])
+    
+
+
+car1 = CAR(t = 0, )
+
+if __name__ == "__main__":
+    pass

@@ -18,7 +18,7 @@ class AStarPlanner:
         resolution: grid resolution [m]
         rr: robot radius[m]
         """
-        map_path = '\grid_map.npy'
+        map_path = '//grid_map.npy'
         dir_path = os.path.abspath(os.path.dirname(__file__))
         path = dir_path + map_path
         self.resolution = 1
