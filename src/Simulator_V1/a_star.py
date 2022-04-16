@@ -21,10 +21,11 @@ class AStarPlanner:
         map_path = '//grid_map.npy'
         dir_path = os.path.abspath(os.path.dirname(__file__))
         path = dir_path + map_path
+        self.map_array =  np.load(path)
+        
         self.resolution = 1
         self.rr = 0
         self.min_x, self.min_y = 0, 0
-        self.map_array =  np.load(path)
         self.obstacle_map = self.map_array.astype(np.int32).tolist()
         self.ox,self.oy = obstacles(self.map_array)
         self.max_x, self.max_y =  self.map_array.shape[0], self.map_array.shape[1]
