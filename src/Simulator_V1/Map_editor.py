@@ -19,7 +19,7 @@ TURQUISE = (64,224,208)
 ORANGE = (255,165,0)
 GREY = (50,50,50)
 YELLOW = (255,215,11)
-DARK_YELLOW = (250,180,10)
+DARK_YELLOW = (250,100,10)
 
 #BG_COLOR = (236,110,110)
 BG_COLOR = (60,200,180)
@@ -45,12 +45,19 @@ class BLOCKS:
         self.bottom_left = -1
         self.bottom_right = -1
         self.neighbours = []
-        self.color1 = RED
-        self.color2 = DARK_RED
+        sample = np.random.randint(len(colors))
+        self.color1 = colors[sample]
+        self.color2 = dark_colors[sample]
         
 
     def change_type(self, t):
         self.rtype = t
+
+    def update_colors(self):
+        sample = np.random.randint(len(colors))
+        self.color1 = colors[sample]
+        self.color2 = dark_colors[sample]
+        
 
     def draw(self,win):
         if self.rtype == "road":
@@ -59,8 +66,8 @@ class BLOCKS:
             pygame.draw.rect(win,self.color1,rect=(self.x,self.y,self.width,self.width/2))
             pygame.draw.rect(win,self.color2,rect=(self.x,self.y+(self.width/2),self.width,self.width/2))
         elif self.rtype == "complex":
-            pygame.draw.rect(win,YELLOW,rect=(self.x,self.y,self.width*2,self.width*2),border_radius=8)
-            pygame.draw.circle(win,DARK_YELLOW,(self.x+self.width,self.y+self.width),self.width,5)
+            pygame.draw.rect(win,YELLOW,rect=(self.x,self.y,self.width,self.width),border_radius=8)
+            pygame.draw.circle(win,DARK_YELLOW,(self.x+self.width//2,self.y+self.width//2),self.width//2,3)
         
 
     def draw_pointer(self,win):
@@ -95,9 +102,9 @@ def store(rmap,path,np_grid=False):
                 grid[i][j] = 1 if rmap[i][j].rtype != "off_road" else 0
         np.save(path+'//grid_map.npy',grid)
         print("Grid_Map Saved!")
-    else:
-        file = open(path+'//map.pkl','wb')
-        pickle.dump(rmap,file)
+
+    file = open(path+'//map.pkl','wb')
+    pickle.dump(rmap,file)
 
 def store_nodes(rmap):
     list_nodes = []
@@ -152,6 +159,7 @@ def main(rmap = None,save_np = False):
                     
                 if ev.key == pygame.K_h:
                     rmap[row,col].change_type("house")
+                    rmap[row,col].update_colors()
                      
                 if ev.key == pygame.K_c:
                     rmap[row,col].change_type("complex")
@@ -179,7 +187,7 @@ def main(rmap = None,save_np = False):
 
                 #Save the rmap 
                 if ev.key ==pygame.K_s:
-                    store(rmap,path)
+                    store(rmap,path,save_np)
             rmap[row,col].draw_pointer(win)            
             draw_map(win,rmap)
 
