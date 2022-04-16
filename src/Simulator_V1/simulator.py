@@ -35,9 +35,12 @@ win = pygame.display.set_mode(size = (win_width*2,win_width))
 pygame.display.set_caption("Simulator_V1")
 
 #loading the map of the city from the map.pkl
-path = os.path.abspath(os.path.dirname(__file__))
-file = open(path+'/map.pkl','rb')
-rmap = pickle.load(file)
+# path = os.path.abspath(os.path.dirname(__file__))
+# file = open(path+'\map.pkl','rb')
+# rmap = pickle.load(file)
+
+
+
 
 #dictionary variable to store the instances of cars
 car_list = defaultdict()

@@ -4,8 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-show_animation = True
-# show_animation = False
+# show_animation = True
+show_animation = False
 
 class AStarPlanner:
 
@@ -268,7 +268,7 @@ def main(S,G):
         plt.pause(0.001)
         plt.show()
     
-    path = np.array([rx,ry])
+    path = np.array([rx,ry]).T
     # np.save('path1',path)
     return path
 
