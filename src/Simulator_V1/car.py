@@ -12,15 +12,6 @@ class CAR:
         self.speed = 1
         self.initial_time = t
 
-# path for vehicle given by central planner
-    def get_path(self,path):
-        """ 
-        'path' is the path provided to the car by the central planner
-        get_path stores the path for the car
-        """
-        self.path = path        # path is a 2D array of x,y positions
-        pass
-
 # Get position at a current point in time
     def get_position(self,t):
         """
