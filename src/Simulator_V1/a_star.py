@@ -73,7 +73,7 @@ class AStarPlanner:
 
         while 1:
             if len(open_set) == 0:
-                print("Open set is empty..")
+                print("Could not find path :(")
                 break
 
             c_id = min(
