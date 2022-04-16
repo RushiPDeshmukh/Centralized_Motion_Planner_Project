@@ -56,15 +56,17 @@ def start_goal_pos_gen():
     while start_index == goal_index:
         start_index = np.random.randint(locations.shape[0])
         goal_index = np.random.randint(locations.shape[0])
-    start_pos = locations[start_index]
-    goal_pos = locations[goal_index]
+    start_pos = locations[start_index].astype(np.int32).tolist()
+    goal_pos = locations[goal_index].astype(np.int32).tolist()
     return start_pos, goal_pos
 
 
-s,g = start_goal_pos_gen()
-print(s,g)
-# car1 = CAR(t = 0, start_pos = s, goal_pos = g, ID = 1)
-# car1.get_path()
+def main():
+    s,g = start_goal_pos_gen()
+    print(type(s),g)
+    return s,g
+    # car1 = CAR(t = 0, start_pos = s, goal_pos = g, ID = 1)
+    # car1.get_path()
 
 if __name__ == "__main__":
-    pass
+    main()

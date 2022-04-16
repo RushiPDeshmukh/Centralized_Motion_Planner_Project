@@ -22,7 +22,7 @@ class AStarPlanner:
         dir_path = os.path.abspath(os.path.dirname(__file__))
         path = dir_path + map_path
         self.map_array =  np.load(path)
-        
+
         self.resolution = 1
         self.rr = 0
         self.min_x, self.min_y = 0, 0
@@ -268,13 +268,13 @@ def main(sx,sy,gx,gy):
     # np.save('path1',path)
     return path
 
-if __name__ == '__main__':
-    sx = 31  # [m]
-    sy = 31  # [m]
-    gx = 13  # [m]
-    gy = 13  # [m]
+# if __name__ == '__main__':
+#     sx = 60  # [m]
+#     sy = 14  # [m]
+#     gx = 17  # [m]
+#     gy = 6  # [m]
 
-    main(sx,sy,gx,gy)
+#     main(sx,sy,gx,gy)
     # main(gx,gy,sx,sy)
     
     # import time
