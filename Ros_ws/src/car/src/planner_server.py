@@ -2,6 +2,8 @@
 
 from car.srv import planner_srv, planner_srvResponse
 import rospy
+import a_star
+
 class planner_ros:
     def __init__(self):
         rospy.init_node('planner_server_node')
@@ -19,7 +21,7 @@ class planner_ros:
         start and end are a row 1x2 vector containg x,y coordinates
         """
         
-        self.planned_path =[]
+        self.planned_path = a_star.main(req.start,req.end)
         return planner_srvResponse(self.planned_path)
 
     def send_start_end(self):

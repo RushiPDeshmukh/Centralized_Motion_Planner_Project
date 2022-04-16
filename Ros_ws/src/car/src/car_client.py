@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import car_gen
 import sys
 import rospy
 from std_msgs.msg import String
@@ -41,16 +41,11 @@ if __name__ == "__main__":
 
     The lines written below can should be deleted once similar lines are implemented in get_path() function in car.py file.
     """
-    x1, y1 = [0, 0] # get this randomly
-    xf, yf = [0, 0]
-    start = [x1, y1]
-    end = [xf, yf]
+    start,end = car_gen.main()
     print('Requesting')
     car = car_ros()
     path = car.car_client(start,end)
     
-    """TODO: Decide how to send this path further to the simulator"""
-    """ 1. could just build the publisher subscriber right here, will check if I can make it possible."""
 
 
 
