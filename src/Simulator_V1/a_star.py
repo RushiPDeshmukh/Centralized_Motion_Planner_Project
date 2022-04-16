@@ -44,7 +44,7 @@ class AStarPlanner:
             return str(self.x) + "," + str(self.y) + "," + str(
                 self.cost) + "," + str(self.parent_index)
 
-    def planning(self, sx, sy, gx, gy):
+    def planning(self, S, G):
         """
         A star path search
 
@@ -58,6 +58,10 @@ class AStarPlanner:
             rx: x position list of the final path
             ry: y position list of the final path
         """
+        sx = S[0]
+        sy = S[1]
+        gx = G[0]
+        gy = G[1]
 
         start_node = self.Node(self.calc_xy_index(sx, self.min_x),
                                self.calc_xy_index(sy, self.min_y), 0.0, -1)
@@ -248,16 +252,16 @@ def obstacles(map_array):
 
 
 
-def main(sx,sy,gx,gy):
+def main(S,G):
     a_star = AStarPlanner()
     
     if show_animation:  # pragma: no cover
         plt.plot(a_star.ox, a_star.oy, ".k")
-        plt.plot(sx, sy, "og")
-        plt.plot(gx, gy, "xb")
+        plt.plot(S[0], S[1], "og")
+        plt.plot(G[0], G[1], "xb")
         # plt.grid(True)
         plt.axis("equal")
-    rx, ry = a_star.planning(sx, sy, gx, gy)
+    rx, ry = a_star.planning(S,G)
 
     if show_animation:  # pragma: no cover
         plt.plot(rx, ry, "-r")
@@ -268,13 +272,11 @@ def main(sx,sy,gx,gy):
     # np.save('path1',path)
     return path
 
-# if __name__ == '__main__':
-#     sx = 60  # [m]
-#     sy = 14  # [m]
-#     gx = 17  # [m]
-#     gy = 6  # [m]
+if __name__ == '__main__':
+    S = [60,14]  # [m]
+    G = [17,6]  # [m]
 
-#     main(sx,sy,gx,gy)
+    main(S,G)
     # main(gx,gy,sx,sy)
     
     # import time
