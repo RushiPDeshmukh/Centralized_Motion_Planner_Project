@@ -1,3 +1,4 @@
+from tracemalloc import start
 import pygame
 import numpy as np
 from grid import *
@@ -31,17 +32,32 @@ class CAR:
         return x_pos,y_pos
 
     def get_path(self):
-        ''''''
+        '''
+        send start and goal positions via ROS to a_star mapper
+        get trajectory in return 
+        '''
+        self.start_position
+        self.goal_position
 
 
 def start_goal_pos():
+    '''
+    chooses random start and goal location on the map
+    'dest.node' is a numpy array of all points that can be start or goal positions
+    '''
     locations = np.load('dest_node')
-    start_index = np.random.randint(locations.shape[0])
-    end_index = np.random.randint(locations.shape[0])
-    
+    start_index,goal_index = 0,0
+    while start_index == goal_index:
+        start_index = np.random.randint(locations.shape[0])
+        goal_index = np.random.randint(locations.shape[0])
+    start_pos = locations[start_index]
+    goal_pos = locations[goal_index]
+    return start_pos, goal_pos
 
 
-car1 = CAR(t = 0, )
+s,g = start_goal_pos()
+car1 = CAR(t = 0,start_pos = s,goal_pos = g, ID = 1)
+car1.get_path
 
 if __name__ == "__main__":
     pass
