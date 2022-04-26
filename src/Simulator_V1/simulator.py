@@ -70,7 +70,8 @@ def render(win,rmap,cars_data):
             car_list[car_id].update_pos(pos,t)
         else:
             car_list[car_id] = CAR(pos,car_id,t)
-        car_list[car_id].draw(win)
+        for _,c in car_list.items():
+            c.draw(win)
     
 
 
