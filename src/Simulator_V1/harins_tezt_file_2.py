@@ -19,17 +19,22 @@ for i  in range(3):
 t = 0
 simtime = 0
 tic = time.time()
-while simtime < 20:
-    toc = time.time()
-    simtime = toc-tic
-    t = t+1
-    for i in range(len(paths)):
-        try:
-            path = paths[i]
-            tuple = (0,(block_width*path[t,0],block_width*path[t,1]),1)
-    #         # print(tuple)
-            render(win,rmap,tuple,car_list)
-        except:
-            pass
-            pygame.time.delay(10)
-    pygame.time.delay(30)
+
+
+print("Paths:",paths[:])
+
+# while simtime < 20:
+#     toc = time.time()
+#     simtime = toc-tic
+#     t = t+1
+#     for i in range(len(paths)):
+#         try:
+#             path = paths[i]
+#             tuple = (0,(block_width*path[t,0],block_width*path[t,1]),1)
+#     #         # print(tuple)
+            
+#             render(win,rmap,tuple_list,car_list)
+#         except:
+#             pass
+#             pygame.time.delay(10)
+#     pygame.time.delay(30)
