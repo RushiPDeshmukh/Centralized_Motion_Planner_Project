@@ -51,6 +51,7 @@ class CAR:
         self.id = id
         self.pos = pos
         self.t = t
+        self.color = np.choose(colors)
 
     def update_pos(self,pos,t):
         self.pos = pos
@@ -59,11 +60,12 @@ class CAR:
     
     def draw(self,win):
         car_rect = pygame.Rect(self.pos[0],self.pos[1],block_width,block_width)
-        pygame.draw.rect(win,ORANGE,car_rect)
-        pygame.display.update()
+        pygame.draw.rect(win,self.color,car_rect)
+        
 
 def render(win,rmap,cars_data,car_list): 
     draw_map(win,rmap)
+    cars_data = [tuple(cars_data[i]) for i in range(len(cars_data))]
     for car_data in cars_data:
         car_id,pos,t = car_data
         if car_id in car_list.keys():
@@ -72,6 +74,8 @@ def render(win,rmap,cars_data,car_list):
             car_list[car_id] = CAR(pos,car_id,t)
     for _,c in car_list.items():
         c.draw(win)
+    pygame.display.update()
+    pygame.time.delay(1000)
     
 
 
