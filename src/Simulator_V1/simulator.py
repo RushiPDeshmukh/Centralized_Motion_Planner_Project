@@ -62,17 +62,15 @@ class CAR:
         pygame.draw.rect(win,ORANGE,car_rect)
         pygame.display.update()
 
-def render(win,rmap,car_data,car_list = []): 
+def render(win,rmap,cars_data): 
     draw_map(win,rmap)
-    car_id,pos,t = car_data
-    
-    if car_id in car_list.keys():
-        car_list[car_id].update_pos(pos,t)
-    else:
-        car_list[car_id] = CAR(pos,car_id,t)
-    
-    for _,c in car_list.items():
-        c.draw(win)
+    for car_data in cars_data:
+        car_id,pos,t = car_data
+        if car_id in car_list.keys():
+            car_list[car_id].update_pos(pos,t)
+        else:
+            car_list[car_id] = CAR(pos,car_id,t)
+        car_list[car_id].draw(win)
     
 
 
