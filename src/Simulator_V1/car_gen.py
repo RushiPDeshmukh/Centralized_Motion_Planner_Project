@@ -63,7 +63,7 @@ def start_goal_pos_gen():
 
 def main():
     s,g = start_goal_pos_gen()
-    print(s,g)
+    # print(s,g)
     return s,g
     # car1 = CAR(t = 0, start_pos = s, goal_pos = g, ID = 1)
     # car1.get_path()
