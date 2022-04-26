@@ -62,7 +62,7 @@ class CAR:
         pygame.draw.rect(win,ORANGE,car_rect)
         pygame.display.update()
 
-def render(win,rmap,car_data,car_list): 
+def render(win,rmap,car_data,car_list = []): 
     draw_map(win,rmap)
     car_id,pos,t = car_data
     
