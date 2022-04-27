@@ -51,8 +51,8 @@ class CAR:
         self.id = id
         self.pos = pos
         self.t = t
-        self.color = ORANGE
-
+        sample = np.random.randint(len(colors))
+        self.color = colors[sample]
     def update_pos(self,pos,t):
         self.pos = pos
         self.t
