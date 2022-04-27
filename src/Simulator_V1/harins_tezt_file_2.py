@@ -24,6 +24,10 @@ paths = paths[paths[:,3].argsort()].astype(np.int16)
 
 print("Paths:",paths)
 
+for i in range(max(paths[:,3])):
+    tuple_list = paths[paths[:,3]==i]
+    render(win,rmap,tuple_list,car_list)
+
 # while simtime < 20:
 #     toc = time.time()
 #     simtime = toc-tic

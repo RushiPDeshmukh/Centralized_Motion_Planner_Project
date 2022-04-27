@@ -51,7 +51,7 @@ class CAR:
         self.id = id
         self.pos = pos
         self.t = t
-        self.color = np.choose(colors)
+        self.color = ORANGE
 
     def update_pos(self,pos,t):
         self.pos = pos
@@ -67,7 +67,8 @@ def render(win,rmap,cars_data,car_list):
     draw_map(win,rmap)
     cars_data = [tuple(cars_data[i]) for i in range(len(cars_data))]
     for car_data in cars_data:
-        car_id,pos,t = car_data
+        x,y,car_id,t = car_data
+        pos = (x*block_width,y*block_width)
         if car_id in car_list.keys():
             car_list[car_id].update_pos(pos,t)
         else:
