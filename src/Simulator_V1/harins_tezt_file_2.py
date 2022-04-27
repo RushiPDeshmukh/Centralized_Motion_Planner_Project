@@ -3,6 +3,7 @@ import car_gen
 import a_star
 from simulator import *
 import time
+from centralized_planner import *
 # import pygame
 
 map_path = '//map.pkl'
@@ -11,17 +12,23 @@ path = dir_path + map_path
 file = open(path,'rb')
 rmap =  pickle.load(file)
 
-paths = []
-for i  in range(3):
+num_cars = 10
+paths = np.empty((1,4))
+for i  in range(num_cars):
     s,g = car_gen.main()
-    paths.append(a_star.main(s,g))
-
-t = 0
-simtime = 0
-tic = time.time()
+    car_id = i
+    paths = np.append(paths,make_plan(s,g,car_id))
 
 
-print("Paths:",paths[:])
+paths = paths.reshape((-1,4))
+paths = paths[paths[:,3].argsort()].astype(np.int16)
+
+# print("Paths:",paths)
+
+for i in range(max(paths[:,3])):
+    tuple_list = paths[paths[:,3]==i]
+    render(win,rmap,tuple_list,car_list)
+    pygame.time.delay(100)
 
 # while simtime < 20:
 #     toc = time.time()
