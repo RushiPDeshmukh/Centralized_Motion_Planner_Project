@@ -22,7 +22,10 @@ class planner_ros:
         """
         
         self.planned_path = a_star.main(req.start,req.end)
-        return planner_srvResponse(self.planned_path)
+        path_x, path_y = self.planned_path
+        print(path_x)
+        #path_x, path_y = planner_srvResponse(self.planned_path) 
+        return path_x, path_y
 
     def send_start_end(self):
         s = rospy.Service('path_planner', planner_srv, self.handle_start_end)

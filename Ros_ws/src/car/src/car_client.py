@@ -2,7 +2,7 @@
 import car_gen
 import sys
 import rospy
-from std_msgs.msg import String
+from std_msgs.msg import Int64
 from car.srv import planner_srv, planner_srvResponse
 #from car.msg import planner_msg, planner_msgResponse
 class car_ros:
@@ -15,23 +15,23 @@ class car_ros:
         rospy.init_node('car_pub', anonymous=True)
         #self.car_id = ros.init_node('car', anonymous=True)   ... IDK if this is what we will need lets see...
         self.car_id = 0
-        pass
+        
         
     def car_client(self, start, end):
         rospy.wait_for_service('path_planner')
         try:
             self.path_planner = rospy.ServiceProxy('path_planner', planner_srv)
             self.response = self.path_planner(start, end)
-            return self.response.path
+            return self.response.path_x, self.response.path_y
         except rospy.ServiceException as e:
             print('service call failed : {}'.format(e))
 
     def car_publisher(self, x_pos, y_pos):
-        self.pub = rospy.Publisher('car_simulator', String, queue_size=10)
+        self.pub = rospy.Publisher('car_simulator', Int64, queue_size=10)
         
         rate = rospy.Rate(10) # 10hz
         while not rospy.is_shutdown():
-            car_info = self.car_id + ',' + x_pos + ',' + y_pos 
+            car_info = [self.car_id,x_pos,y_pos] 
             self.pub.publish(car_info)
             rate.sleep()
 

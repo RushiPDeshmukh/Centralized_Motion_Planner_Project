@@ -1,5 +1,6 @@
+#!/usr/bin/env python3
 import rospy
-from std_msgs.msg import String
+from std_msgs.msg import Int64
 from utils.simulator import *
 
 class simulator_ros:
@@ -25,7 +26,7 @@ class simulator_ros:
         """
         Subscribes to car publisher where we are getting the data
         """
-        rospy.Subscriber('car_simulator', String, self.car_callback)
+        rospy.Subscriber('car_simulator', Int64, self.car_callback)
 
         rospy.spin()
 

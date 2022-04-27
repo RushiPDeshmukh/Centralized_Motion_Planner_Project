@@ -7,6 +7,7 @@ import random
 ################ This version is to make the map look like a mini motorways sim ##################
 
 path = os.path.abspath(os.path.dirname(__file__))
+print(path)
 RED = (255,0,0)
 DARK_RED = (200,0,0)
 GREEN = (0,255,0)

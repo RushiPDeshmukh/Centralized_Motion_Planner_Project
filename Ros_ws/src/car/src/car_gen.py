@@ -1,4 +1,4 @@
-from tracemalloc import start
+#from tracemalloc import start
 # import pygame
 import numpy as np
 import os
@@ -47,7 +47,7 @@ def start_goal_pos_gen():
     chooses random start and goal location on the map
     'dest.node' is a numpy array of all points that can be start or goal positions
     '''
-    map_path = '//dest_node.npy'
+    map_path = '//utils//dest_node.npy'
     dir_path = os.path.abspath(os.path.dirname(__file__))
     path = dir_path + map_path
     locations =  np.load(path)

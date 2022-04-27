@@ -18,7 +18,7 @@ class AStarPlanner:
         resolution: grid resolution [m]
         rr: robot radius[m]
         """
-        map_path = '//grid_map.npy'
+        map_path = '//utils//grid_map.npy'
         dir_path = os.path.abspath(os.path.dirname(__file__))
         path = dir_path + map_path
         self.map_array =  np.load(path)
@@ -268,9 +268,10 @@ def main(S,G):
         plt.pause(0.001)
         plt.show()
     
-    path = np.array([rx,ry])
+    path_x = np.array(rx)
+    path_y = np.array(ry)
     # np.save('path1',path)
-    return path
+    return path_x, path_y
 
 if __name__ == '__main__':
     S = [60,14]  # [m]

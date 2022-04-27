@@ -3,7 +3,7 @@ import numpy as np
 import pickle
 import os
 import random 
-from Map_editor import *
+from utils.Map_editor import *
 from collections import defaultdict
 
 
