@@ -76,7 +76,6 @@ def render(win,rmap,cars_data,car_list):
     for _,c in car_list.items():
         c.draw(win)
     pygame.display.update()
-    pygame.time.delay(1000)
     
 
 
