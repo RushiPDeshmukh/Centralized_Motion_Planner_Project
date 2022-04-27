@@ -28,7 +28,7 @@ paths = paths[paths[:,3].argsort()].astype(np.int16)
 for i in range(max(paths[:,3])):
     tuple_list = paths[paths[:,3]==i]
     render(win,rmap,tuple_list,car_list)
-    pygame.time.delay(1000)
+    pygame.time.delay(100)
 
 # while simtime < 20:
 #     toc = time.time()
