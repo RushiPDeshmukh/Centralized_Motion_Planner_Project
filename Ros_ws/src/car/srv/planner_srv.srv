@@ -1,5 +1,6 @@
 int64[2] start
 int64[2] end
 ---
-int64[] path
+float64[] path_x
+float64[] path_y
 
