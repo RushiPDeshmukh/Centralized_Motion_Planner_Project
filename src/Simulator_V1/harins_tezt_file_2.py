@@ -12,7 +12,7 @@ path = dir_path + map_path
 file = open(path,'rb')
 rmap =  pickle.load(file)
 
-num_cars = 10
+num_cars = 5
 paths = np.empty((1,4))
 for i  in range(num_cars):
     s,g = car_gen.main()
@@ -28,7 +28,7 @@ paths = paths[paths[:,3].argsort()].astype(np.int16)
 for i in range(max(paths[:,3])):
     tuple_list = paths[paths[:,3]==i]
     render(win,rmap,tuple_list,car_list)
-    pygame.time.delay(100)
+    pygame.time.delay(1000)
 
 # while simtime < 20:
 #     toc = time.time()
