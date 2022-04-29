@@ -2,6 +2,7 @@
 import car_gen
 import sys
 import rospy
+from car.msg import sim_msg
 from std_msgs.msg import Int64MultiArray
 from car.srv import planner_srv, planner_srvResponse
 #from car.msg import planner_msg, planner_msgResponse
@@ -27,12 +28,12 @@ class car_ros:
             print('service call failed : {}'.format(e))
 
     def car_publisher(self, x_pos, y_pos):
-        self.pub = rospy.Publisher('car_simulator', Int64MultiArray, queue_size=10)
+        self.pub = rospy.Publisher('car_simulator', sim_msg, queue_size=10)
         
         rate = rospy.Rate(10) # 10hz
         while not rospy.is_shutdown():
-            car_info = [self.car_id,[x_pos,y_pos]] 
-            self.pub.publish(car_info)
+            car_info = None 
+            self.pub.publish(self.car_id,x_pos,y_pos)
             rate.sleep()
         
 if __name__ == "__main__":
