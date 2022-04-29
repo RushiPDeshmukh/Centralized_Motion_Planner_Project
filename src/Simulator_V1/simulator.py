@@ -51,6 +51,8 @@ class CAR:
         self.id = id
         self.pos = pos
         self.t = t
+        self.surface = pygame.image.load(path+ "//" +'car1.png')
+        self.surface = pygame.transform.scale(self.surface,(block_width,block_width))
         sample = np.random.randint(len(colors))
         self.color = colors[sample]
     def update_pos(self,pos,t):
@@ -59,8 +61,13 @@ class CAR:
         return True
     
     def draw(self,win):
-        car_rect = pygame.Rect(self.pos[0],self.pos[1],block_width,block_width)
-        pygame.draw.rect(win,self.color,car_rect)
+
+        car_rect = self.surface.get_rect()
+        car_rect.topleft = self.pos
+        c = self.pos[0] + block_width//2 , self.pos[1] + block_width//2
+        win.blit(self.surface,car_rect)
+        # pygame.draw.circle(win,ORANGE,c,block_width//2)
+        # pygame.draw.circle(win,WHITE,c,block_width//2,2)
         
 
 def render(win,rmap,cars_data,car_list): 
