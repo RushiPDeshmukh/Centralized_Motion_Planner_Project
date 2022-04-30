@@ -2,7 +2,8 @@
 import car_gen
 import sys
 import rospy
-from std_msgs.msg import Int64
+from car.msg import sim_msg
+from std_msgs.msg import Int64MultiArray
 from car.srv import planner_srv, planner_srvResponse
 #from car.msg import planner_msg, planner_msgResponse
 class car_ros:
@@ -22,19 +23,19 @@ class car_ros:
         try:
             self.path_planner = rospy.ServiceProxy('path_planner', planner_srv)
             self.response = self.path_planner(start, end)
-            return self.response.path_x, self.response.path_y
+            return [self.response.path_x, self.response.path_y]
         except rospy.ServiceException as e:
             print('service call failed : {}'.format(e))
 
     def car_publisher(self, x_pos, y_pos):
-        self.pub = rospy.Publisher('car_simulator', Int64, queue_size=10)
+        self.pub = rospy.Publisher('car_simulator', sim_msg, queue_size=10)
         
         rate = rospy.Rate(10) # 10hz
         while not rospy.is_shutdown():
-            car_info = [self.car_id,x_pos,y_pos] 
-            self.pub.publish(car_info)
+            car_info = None 
+            self.pub.publish(self.car_id,x_pos,y_pos)
             rate.sleep()
-
+        
 if __name__ == "__main__":
     """
     TODO: Here take the numpy array and generate randomly the start and end points
@@ -44,9 +45,15 @@ if __name__ == "__main__":
     start,end = car_gen.main()
     print('Requesting')
     car = car_ros()
-    path = car.car_client(start,end)
-    
-
+    path_x, path_y = car.car_client(start,end)
+    print(path_x, path_y)
+    for i in range(len(path_x)):
+        x = path_x[i]
+        y = path_y[i]
+        try:
+            car.car_publisher(x, y)
+        except rospy.ROSInterruptException:
+            pass
 
 
     

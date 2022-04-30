@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import rospy
+from car.msg import sim_msg
 from std_msgs.msg import Int64
 from utils.simulator import *
 
@@ -18,7 +19,7 @@ class simulator_ros:
         file = open(path,'rb')
         rmap =  pickle.load(file)
 
-        my_tuple = (data[0], (block_width*data[1], block_width*data[2]))
+        my_tuple = (data.car_id, (block_width*data.x_pos, block_width*data.y_pos))
         render(win, rmap, my_tuple, car_list)
         rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
 
@@ -26,7 +27,7 @@ class simulator_ros:
         """
         Subscribes to car publisher where we are getting the data
         """
-        rospy.Subscriber('car_simulator', Int64, self.car_callback)
+        rospy.Subscriber('car_simulator', sim_msg, self.car_callback)
 
         rospy.spin()
 
