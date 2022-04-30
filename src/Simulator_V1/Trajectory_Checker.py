@@ -14,10 +14,13 @@ def is_valid(path,path_bank):
 def correct_paths(path, path_bank):
     valid = False
     curr_path = path
-    while not valid:
+    count = 0
+    while not valid and count !=5:
         valid,collision_points = is_valid(curr_path,path_bank)
+        count+=1
         for state in collision_points:
             t = state[3]
             path[path[:,3]>=t] = path[path[:,3]>=t] + 1
-            
+    return path,valid,collision_points
+    
 
