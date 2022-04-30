@@ -23,7 +23,7 @@ for i  in range(num_cars):
 paths = paths.reshape((-1,4))
 paths = paths[paths[:,3].argsort()].astype(np.int16)
 
-# print("Paths:",paths)
+print("Paths:",paths)
 
 for i in range(max(paths[:,3])):
     tuple_list = paths[paths[:,3]==i]
