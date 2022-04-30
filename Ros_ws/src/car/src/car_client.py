@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import car_gen
+import utils.car_gen as car_gen
 import sys
 import rospy
 from car.msg import sim_msg

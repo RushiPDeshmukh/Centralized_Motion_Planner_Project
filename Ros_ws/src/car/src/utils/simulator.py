@@ -3,7 +3,7 @@ import numpy as np
 import pickle
 import os
 import random 
-from utils.Map_editor import *
+from Map_editor import *
 from collections import defaultdict
 
 
@@ -51,28 +51,38 @@ class CAR:
         self.id = id
         self.pos = pos
         self.t = t
-
+        self.surface = pygame.image.load(path+ "//" +'car1.png')
+        self.surface = pygame.transform.scale(self.surface,(block_width,block_width))
+        sample = np.random.randint(len(colors))
+        self.color = colors[sample]
     def update_pos(self,pos,t):
         self.pos = pos
         self.t
         return True
     
     def draw(self,win):
-        car_rect = pygame.Rect(self.pos[0],self.pos[1],block_width,block_width)
-        pygame.draw.rect(win,ORANGE,car_rect)
-        pygame.display.update()
 
-def render(win,rmap,car_data,car_list): 
+        car_rect = self.surface.get_rect()
+        car_rect.topleft = self.pos
+        c = self.pos[0] + block_width//2 , self.pos[1] + block_width//2
+        win.blit(self.surface,car_rect)
+        # pygame.draw.circle(win,ORANGE,c,block_width//2)
+        # pygame.draw.circle(win,WHITE,c,block_width//2,2)
+        
+
+def render(win,rmap,cars_data,car_list): 
     draw_map(win,rmap)
-    car_id,pos,t = car_data
-    
-    if car_id in car_list.keys():
-        car_list[car_id].update_pos(pos,t)
-    else:
-        car_list[car_id] = CAR(pos,car_id,t)
-    
+    cars_data = [tuple(cars_data[i]) for i in range(len(cars_data))]
+    for car_data in cars_data:
+        x,y,car_id,t = car_data
+        pos = (x*block_width,y*block_width)
+        if car_id in car_list.keys():
+            car_list[car_id].update_pos(pos,t)
+        else:
+            car_list[car_id] = CAR(pos,car_id,t)
     for _,c in car_list.items():
         c.draw(win)
+    pygame.display.update()
     
 
 
