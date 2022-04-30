@@ -61,12 +61,12 @@ class BLOCKS:
 
     def draw(self,win):
         if self.rtype == "road":
-            pygame.draw.rect(win,GREY,rect=(self.x,self.y,self.width,self.width),border_top_left_radius=self.top_left,border_top_right_radius=self.top_right,border_bottom_left_radius=self.bottom_left,border_bottom_right_radius=self.bottom_right)
+            pygame.draw.rect(win,GREY,(self.x,self.y,self.width,self.width))
         elif self.rtype == "house":
-            pygame.draw.rect(win,self.color1,rect=(self.x,self.y,self.width,self.width/2))
-            pygame.draw.rect(win,self.color2,rect=(self.x,self.y+(self.width/2),self.width,self.width/2))
+            pygame.draw.rect(win,self.color1,(self.x,self.y,self.width,self.width/2))
+            pygame.draw.rect(win,self.color2,(self.x,self.y+(self.width/2),self.width,self.width/2))
         elif self.rtype == "complex":
-            pygame.draw.rect(win,YELLOW,rect=(self.x,self.y,self.width,self.width),border_radius=8)
+            pygame.draw.rect(win,YELLOW,(self.x,self.y,self.width,self.width),8)
             pygame.draw.circle(win,DARK_YELLOW,(self.x+self.width//2,self.y+self.width//2),self.width//2,3)
         
 

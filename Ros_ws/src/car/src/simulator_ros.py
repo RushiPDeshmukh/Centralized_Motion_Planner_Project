@@ -19,11 +19,12 @@ class simulator_ros:
         TODO:: Add whatever you have for simulating the car here...
         does whatever necessary with the data received from car data.
         """
-        
-        #my_tuple = (data.car_id, (block_width*data.x_pos, block_width*data.y_pos),0)
-        my_tuple = (0, (1,1), 0)
+        #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+        data_tuple = (data.car_id, block_width*data.x_pos, block_width*data.y_pos,0)
+        my_tuple = []
+        my_tuple.append(data_tuple)
         render(win, rmap, my_tuple, car_list)
-        rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+        
 
     def car_sub(self):
         """
