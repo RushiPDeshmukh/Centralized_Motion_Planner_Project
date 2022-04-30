@@ -30,6 +30,9 @@ ORANGE = (255,165,0)
 GREY = (50,50,50)
 YELLOW = (255,215,11)
 DARK_YELLOW = (250,180,10)
+SOFT_VIOLET = (225,175,253)
+VIOLET = (147,0,255)
+
 # win is the main display of the simulator
 win = pygame.display.set_mode(size = (win_width*2,win_width))
 pygame.display.set_caption("Simulator_V1")
@@ -51,8 +54,8 @@ class CAR:
         self.id = id
         self.pos = pos
         self.t = t
-        self.surface = pygame.image.load(path+ "//" +'car1.png')
-        self.surface = pygame.transform.scale(self.surface,(block_width,block_width))
+        # self.surface = pygame.image.load(path+ "//" +'car1.png')
+        # self.surface = pygame.transform.scale(self.surface,(block_width,block_width))
         sample = np.random.randint(len(colors))
         self.color = colors[sample]
     def update_pos(self,pos,t):
@@ -62,16 +65,15 @@ class CAR:
     
     def draw(self,win):
 
-        car_rect = self.surface.get_rect()
-        car_rect.topleft = self.pos
+        # car_rect = self.surface.get_rect()
+        # car_rect.topleft = self.pos
         c = self.pos[0] + block_width//2 , self.pos[1] + block_width//2
-        win.blit(self.surface,car_rect)
-        # pygame.draw.circle(win,ORANGE,c,block_width//2)
-        # pygame.draw.circle(win,WHITE,c,block_width//2,2)
+        # win.blit(self.surface,car_rect)
+        pygame.draw.circle(win,VIOLET,c,block_width//2)
+        pygame.draw.circle(win,SOFT_VIOLET,c,block_width/2.5,2)
         
 
 def render(win,rmap,cars_data,car_list): 
-    draw_map(win,rmap)
     cars_data = [tuple(cars_data[i]) for i in range(len(cars_data))]
     for car_data in cars_data:
         x,y,car_id,t = car_data
@@ -80,6 +82,7 @@ def render(win,rmap,cars_data,car_list):
             car_list[car_id].update_pos(pos,t)
         else:
             car_list[car_id] = CAR(pos,car_id,t)
+    draw_map(win,rmap)
     for _,c in car_list.items():
         c.draw(win)
     pygame.display.update()

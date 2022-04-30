@@ -9,7 +9,7 @@ show_animation = False
 
 class AStarPlanner:
 
-    def __init__(self):
+    def __init__(self, collisions = None):
         """
         Initialize grid map for a star planning
 
@@ -27,7 +27,8 @@ class AStarPlanner:
         self.rr = 0
         self.min_x, self.min_y = 0, 0
         self.obstacle_map = self.map_array.astype(np.int32).tolist()
-        self.ox,self.oy = obstacles(self.map_array)
+        self.collisions = collisions
+        self.ox,self.oy = obstacles(self.map_array,collisions)
         self.max_x, self.max_y =  self.map_array.shape[0], self.map_array.shape[1]
         self.x_width, self.y_width = 1, 1
         self.motion = self.get_motion_model()
@@ -184,6 +185,10 @@ class AStarPlanner:
         # collision check
         if self.obstacle_map[node.x][node.y]:
             return False
+        
+        if self.collisions != None:
+            if [px,py] in self.collisions:
+                return False
 
         return True
 
@@ -202,11 +207,7 @@ class AStarPlanner:
         #         y = self.calc_grid_position(iy, self.min_y)
                 if self.map_array[ix,iy] == 0:
                     self.obstacle_map[ix][iy] = True
-        #         for iox, ioy in zip(ox, oy):
-        #             d = math.hypot(iox - x, ioy - y)
-        #             if d <= self.rr:
-        #                 self.obstacle_map[ix][iy] = True
-        #                 break
+
 
     @staticmethod
     def get_motion_model():
@@ -223,12 +224,19 @@ class AStarPlanner:
         return motion
 
 
-def obstacles(map_array):
+def obstacles(map_array,collisions = None):
     ox = []
     oy = []
     O = np.argwhere(map_array<1)
     ox = O[:,0].astype(np.int32).tolist()
     oy = O[:,1].astype(np.int32).tolist()
+    # print('Cols',collisions)
+    if collisions != None:
+        for i in range(len(collisions)):
+            # print('ox',ox,type(ox))
+            # print('colpoi',int(collisions[i,0]),type(int(collisions[i,0])))
+            ox.append(int(collisions[i][0]))
+            oy.append(int(collisions[i][1]))
 
     # # add boundaries if the space is open
     # min_x = -1
@@ -252,8 +260,8 @@ def obstacles(map_array):
 
 
 
-def main(S,G):
-    a_star = AStarPlanner()
+def main(S,G,collision = []):
+    a_star = AStarPlanner(collision)
     
     if show_animation:  # pragma: no cover
         plt.plot(a_star.ox, a_star.oy, ".k")
@@ -276,14 +284,13 @@ if __name__ == '__main__':
     S = [60,14]  # [m]
     G = [17,6]  # [m]
 
-    main(S,G)
-    # main(gx,gy,sx,sy)
+    main(S,G,[[42,1]])
     
     # import time
     # tic = time.time()
     # for i in range(50):
-    #     main(sx,sy,gx,gy)
-    #     main(gx,gy,sx,sy)
+    #     main(S,G)
+    #     main(G,S)
     #     print(2*i)
     # toc = time.time()
     # print('Time for 100 searches:',np.round(toc-tic))

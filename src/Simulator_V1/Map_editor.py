@@ -85,13 +85,15 @@ def init_map(block_width, win_width,node = BLOCKS):
             Empty_map[i][j] = node(row= i,col = j,block_width=block_width)
     return Empty_map
 
-def draw_map(win, map):
+def draw_map(win, map,update = False):
     win.fill(BG_COLOR)
     row_map, col_map = map.shape
     for i in range(row_map):
         for j in range(col_map):
             map[i][j].draw(win)
-    pygame.display.update()
+    if update:
+        pygame.display.update()
+        
 
 def store(rmap,path,np_grid=False):
     if np_grid:

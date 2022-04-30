@@ -1,14 +1,14 @@
 import numpy as np
-import car_gen
-import a_star
-from simulator import *
+# import car_gen
+# import a_star
+# from simulator import *
 # import pygame
 
-map_path = '//map.pkl'
-dir_path = os.path.abspath(os.path.dirname(__file__))
-path = dir_path + map_path
-file = open(path,'rb')
-rmap =  pickle.load(file)
+# map_path = '//map.pkl'
+# dir_path = os.path.abspath(os.path.dirname(__file__))
+# path = dir_path + map_path
+# file = open(path,'rb')
+# rmap =  pickle.load(file)
 
 # paths = []
 # s1,g1 = car_gen.main()
@@ -33,8 +33,15 @@ for i in range(len(A)):
     A[i,3] = i
     A[i,2] = 64
 
-print(A)
-# print(np.max(A[:,3]))
 
-for i in range(max(A[:,3])):
-    print(A[A[:,3]==i])
+B = np.array([[0,0],[1,0],[2,0],[2,1],[2,2]])
+B = np.tile(B,[1,2])
+for i in range(len(A)):
+    B[i,3] = i
+    B[i,2] = 69
+
+coll = [[1,42]]
+x = [1,1,2,3]
+y = [2,4,1,8]
+
+x.append(coll[0][0])
