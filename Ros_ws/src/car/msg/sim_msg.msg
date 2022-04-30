@@ -1,3 +1,3 @@
-int64 car_id
-int64 x_pos
-int64 y_pos
+float64 car_id
+float64 x_pos
+float64 y_pos

@@ -2,8 +2,8 @@
 
 from car.srv import planner_srv, planner_srvResponse
 import rospy
-import a_star
-
+import utils.a_star as a_star
+import utils.centralized_planner as cp
 class planner_ros:
     def __init__(self):
         rospy.init_node('planner_server_node')
@@ -21,8 +21,9 @@ class planner_ros:
         start and end are a row 1x2 vector containg x,y coordinates
         """
         
-        self.planned_path = a_star.main(req.start,req.end)
-        path_x, path_y = self.planned_path
+        #self.planned_path = a_star.main(req.start,req.end)
+        self.planned_path = cp.make_plan(req.start,req.end)
+        path_x, path_y, car_id, time = self.planned_path[:,0], self.planned_path[:,1],self.planned_path[:,2], self.planned_path[:,3]
         print(path_x)
         #path_x, path_y = planner_srvResponse(self.planned_path) 
         return path_x, path_y
