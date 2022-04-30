@@ -24,7 +24,9 @@ class planner_ros:
         #self.planned_path = a_star.main(req.start,req.end)
         self.planned_path = cp.make_plan(req.start,req.end)
         path_x, path_y, car_id, time = self.planned_path[:,0], self.planned_path[:,1],self.planned_path[:,2], self.planned_path[:,3]
-        print(path_x)
+        if path_x is not None:
+            print('Path found successfully')
+        # print(path_x)
         #path_x, path_y = planner_srvResponse(self.planned_path) 
         return path_x, path_y
 

@@ -56,7 +56,7 @@ if __name__ == "__main__":
     print('Requesting')
     car = car_ros()
     path_x, path_y = car.car_client(start,end)
-    print(path_x, path_y)
+    # print(path_x, path_y)
     try:
         car.car_publisher(path_x, path_y)
     except rospy.ROSInterruptException:
