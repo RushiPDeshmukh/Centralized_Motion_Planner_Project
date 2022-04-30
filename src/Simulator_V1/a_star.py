@@ -9,7 +9,7 @@ show_animation = False
 
 class AStarPlanner:
 
-    def __init__(self, collisions = [[]]):
+    def __init__(self, collisions = None):
         """
         Initialize grid map for a star planning
 
@@ -186,8 +186,9 @@ class AStarPlanner:
         if self.obstacle_map[node.x][node.y]:
             return False
         
-        if [px,py] in self.collisions:
-            return False
+        if self.collisions != None:
+            if [px,py] in self.collisions:
+                return False
 
         return True
 
@@ -223,18 +224,19 @@ class AStarPlanner:
         return motion
 
 
-def obstacles(map_array,collisions):
+def obstacles(map_array,collisions = None):
     ox = []
     oy = []
     O = np.argwhere(map_array<1)
     ox = O[:,0].astype(np.int32).tolist()
     oy = O[:,1].astype(np.int32).tolist()
-
-    for i in range(len(collisions)):
-        # print('ox',ox,type(ox))
-        # print('colpoi',int(collisions[i,0]),type(int(collisions[i,0])))
-        ox.append(int(collisions[i][0]))
-        oy.append(int(collisions[i][1]))
+    # print('Cols',collisions)
+    if collisions != None:
+        for i in range(len(collisions)):
+            # print('ox',ox,type(ox))
+            # print('colpoi',int(collisions[i,0]),type(int(collisions[i,0])))
+            ox.append(int(collisions[i][0]))
+            oy.append(int(collisions[i][1]))
 
     # # add boundaries if the space is open
     # min_x = -1

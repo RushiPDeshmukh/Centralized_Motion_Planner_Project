@@ -16,18 +16,19 @@ paths = np.empty((1,4))
 for i  in range(num_cars):
     s,g = car_gen.main()
     car_id = i
-    paths = np.append(paths,make_plan(s,g,car_id))
+    path = make_plan(s,g,car_id,paths = paths)
+    paths = np.append(paths,path)
 
+    paths = paths.reshape((-1,4))
 
-paths = paths.reshape((-1,4))
-paths = paths[paths[:,3].argsort()].astype(np.int16)
+    paths = paths[paths[:,3].argsort()].astype(np.int16)
 
-print("Paths:",paths)
+# print("Paths:",paths)
 
 for i in range(max(paths[:,3])):
     tuple_list = paths[paths[:,3]==i]
     render(win,rmap,tuple_list,car_list)
-    pygame.time.delay(500)
+    pygame.time.delay(200)
 
 # while simtime < 20:
 #     toc = time.time()
