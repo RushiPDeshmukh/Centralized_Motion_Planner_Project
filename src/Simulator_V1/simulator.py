@@ -72,7 +72,8 @@ class CAR:
         pygame.draw.circle(win,VIOLET,c,block_width//2)
         pygame.draw.circle(win,SOFT_VIOLET,c,block_width/2.5,2)
         
-
+def collision_check(cars_data):
+    pass
 def render(win,rmap,cars_data,car_list): 
     cars_data = [tuple(cars_data[i]) for i in range(len(cars_data))]
     for car_data in cars_data:
