@@ -20,7 +20,7 @@ class simulator_ros:
         does whatever necessary with the data received from car data.
         """
         #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
-        data_tuple = (data.car_id, block_width*data.x_pos, block_width*data.y_pos,0)
+        data_tuple = (data.x_pos, data.y_pos,data.car_id,0)
         my_tuple = []
         my_tuple.append(data_tuple)
         render(win, rmap, my_tuple, car_list)

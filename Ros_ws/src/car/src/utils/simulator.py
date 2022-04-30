@@ -64,7 +64,7 @@ class CAR:
 
         # car_rect = self.surface.get_rect()
         # car_rect.topleft = self.pos
-        c = self.pos[0] + block_width//2 , self.pos[1] + block_width//2
+        c = int(self.pos[0]) + block_width//2 , int(self.pos[1]) + block_width//2
         # win.blit(self.surface,car_rect)
         pygame.draw.circle(win,ORANGE,c,block_width//2)
         pygame.draw.circle(win,WHITE,c,block_width//2,2)

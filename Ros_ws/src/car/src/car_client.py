@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import utils.car_gen as car_gen
 import sys
+import random
 import rospy
 from car.msg import sim_msg
 from std_msgs.msg import Int64MultiArray
@@ -13,9 +14,12 @@ class car_ros:
         
         
         """
-        rospy.init_node('car_pub', anonymous=True)
+        rand_id = random.randint(0,1000)
+
+        node_name = 'car_' + str(rand_id)
+        rospy.init_node(node_name, anonymous=True)
         #self.car_id = ros.init_node('car', anonymous=True)   ... IDK if this is what we will need lets see...
-        self.car_id = 0
+        self.car_id = rand_id
         
         
     def car_client(self, start, end):
@@ -27,14 +31,20 @@ class car_ros:
         except rospy.ServiceException as e:
             print('service call failed : {}'.format(e))
 
-    def car_publisher(self, x_pos, y_pos):
+    def car_publisher(self, path_x, path_y):
         self.pub = rospy.Publisher('car_simulator', sim_msg, queue_size=10)
         
         rate = rospy.Rate(10) # 10hz
         while not rospy.is_shutdown():
             car_info = None 
-            self.pub.publish(self.car_id,x_pos,y_pos)
-            rate.sleep()
+            for i in range(len(path_x)):
+                x_pos = path_x[i]
+                y_pos = path_y[i]
+                #print(x_pos, y_pos)
+                self.pub.publish(self.car_id,x_pos,y_pos)
+                rate.sleep()
+            break     
+            
         
 if __name__ == "__main__":
     """
@@ -47,13 +57,10 @@ if __name__ == "__main__":
     car = car_ros()
     path_x, path_y = car.car_client(start,end)
     print(path_x, path_y)
-    for i in range(len(path_x)):
-        x = path_x[i]
-        y = path_y[i]
-        try:
-            car.car_publisher(x, y)
-        except rospy.ROSInterruptException:
-            pass
+    try:
+        car.car_publisher(path_x, path_y)
+    except rospy.ROSInterruptException:
+        pass
 
 
     
