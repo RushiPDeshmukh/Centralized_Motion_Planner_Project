@@ -277,6 +277,8 @@ def main(S,G,collision = []):
         plt.show()
     
     path = np.array([rx,ry]).T
+    path = np.append(path,[-1,-1])
+    path = path.reshape((-1,2))
     # np.save('path1',path)
     return path
 

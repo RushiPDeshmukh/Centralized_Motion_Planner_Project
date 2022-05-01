@@ -15,6 +15,7 @@ def correct_paths(path, path_bank):
     valid = False
     curr_path = path
     count = 0
+    valid,collision_points = is_valid(curr_path,path_bank)
     while not valid and count !=5:
         valid,collision_points = is_valid(curr_path,path_bank)
         count+=1
