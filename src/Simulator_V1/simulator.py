@@ -36,7 +36,13 @@ VIOLET = (147,0,255)
 # win is the main display of the simulator
 win = pygame.display.set_mode(size = (win_width*2,win_width))
 pygame.display.set_caption("Simulator_V1")
-
+pygame.font.init()
+font = pygame.font.Font('freesansbold.ttf',10)
+text = font.render("T",True,BLACK)
+textrect1 = text.get_rect()
+textrect1.topleft = (450,10)
+textrect2 = text.get_rect()
+textrect2.topleft = (450,30)
 #loading the map of the city from the map.pkl
 # path = os.path.abspath(os.path.dirname(__file__))
 # file = open(path+'\map.pkl','rb')
@@ -73,20 +79,48 @@ class CAR:
         pygame.draw.circle(win,SOFT_VIOLET,c,block_width/2.5,2)
         
 def collision_check(cars_data):
-    pass
-def render(win,rmap,cars_data,car_list): 
+    collision = False
+    ids = []
+    for car_datax in cars_data:
+        xi,yi,car_idx,_ = car_datax
+        for car_datay in cars_data:
+            xj,yj,car_idy,_ = car_datay
+            if xi == xj and yi == yj:
+                collision = True
+                if not car_idx in ids:
+                    ids.append(car_idx)
+                if not car_idy in ids:
+                    ids.append(car_idy)
+    
+    return collision,ids
+
+
+def render(win,rmap,cars_data,car_list,reached = 0, collision_count = 0): 
     cars_data = [tuple(cars_data[i]) for i in range(len(cars_data))]
     for car_data in cars_data:
         x,y,car_id,t = car_data
         pos = (x*block_width,y*block_width)
         if car_id in car_list.keys():
             car_list[car_id].update_pos(pos,t)
+            if pos == (-1,-1):
+                reached +=1
+                car_list.pop(car_id)    
         else:
             car_list[car_id] = CAR(pos,car_id,t)
+    collision,colliding_cars_id = collision_check(cars_data)
+    if collision:
+        for id in colliding_cars_id:
+            car_list.pop(id)
+            collision_count +=1
     draw_map(win,rmap)
     for _,c in car_list.items():
         c.draw(win)
+    text1 = font.render("Safe Reached Home: "+str(reached),True,BLACK)
+    win.blit(text1,textrect1)
+    text2 = font.render("Collisions Detected: "+str(collision_count),True,BLACK)
+    win.blit(text2,textrect2)
     pygame.display.update()
+    return reached,collision_count
     
 
 
