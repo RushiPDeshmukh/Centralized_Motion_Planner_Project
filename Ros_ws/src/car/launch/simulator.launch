@@ -1,0 +1,10 @@
+<launch>
+    
+    
+    <!-- <node name="planner_interface" pkg="car" type="planner_server.py" output="screen">
+    </node>
+     -->
+    <node name="simulator_interface" pkg="car" type="simulator_ros.py" output="screen">
+    </node>
+    
+</launch>
