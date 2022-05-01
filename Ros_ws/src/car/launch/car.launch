@@ -1,0 +1,9 @@
+<launch>
+    
+    
+    <node name="car_simulator_interface" pkg="car" type="car_client.py" output="screen">
+        <!-- <remap from="cmd_vel" to="$(arg base_topic)" /> -->
+    </node>
+    
+    
+</launch>

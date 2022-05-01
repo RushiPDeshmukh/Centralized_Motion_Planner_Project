@@ -42,7 +42,9 @@ class car_ros:
                 y_pos = path_y[i]
                 #print(x_pos, y_pos)
                 self.pub.publish(self.car_id,x_pos,y_pos)
+                
                 rate.sleep()
+            self.pub.publish(self.car_id,-1,-1)
             break     
             
         
