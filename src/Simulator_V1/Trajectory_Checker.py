@@ -21,7 +21,8 @@ def correct_paths(path, path_bank):
         count+=1
         for state in collision_points:
             t = state[3]
-            path[path[:,3]>=t] = path[path[:,3]>=t] + 1
+            path[path[:,3]>=t,3] = path[path[:,3]>=t,3] + 1
+            
     return path,valid,collision_points
     
 

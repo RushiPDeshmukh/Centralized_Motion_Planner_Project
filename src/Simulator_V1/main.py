@@ -18,9 +18,9 @@ total_requests = 0
 if __name__ == "__main__":
     old_t = time.time()
     t = old_t - time.time()
-    while t < 6000:
+    while t < 600:
         t = time.time() - old_t
-        num_cars = np.random.randint(1,10)
+        num_cars = np.random.randint(3,10)
         total_requests += num_cars
         print("|| num_cars:",num_cars,'|| time: ',t,"||")
 
@@ -44,7 +44,7 @@ if __name__ == "__main__":
             for id in colliding_ids:
                 i = paths[:,2]==id
                 paths = np.delete(paths,i,0)
-            pygame.time.delay(200)
+            pygame.time.delay(500)
         
 
    
