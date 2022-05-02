@@ -18,7 +18,9 @@ def make_plan(start,goal,car_id = -1, t = 0, speed = 1, paths = None):
     # print("collision points:",col_points)
     
     # print('t+1 option')
-    path,valid,col_points = correct_paths(path,paths)
+    valid,col_points =is_valid(path,paths)
+    if not valid:
+        path,valid,col_points = correct_paths(path,paths)
     
     # while not valid:
 
