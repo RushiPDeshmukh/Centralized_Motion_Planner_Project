@@ -21,18 +21,16 @@ def make_plan(start,goal,car_id = -1, t = 0, speed = 1, paths = None):
     valid,col_points =is_valid(path,paths)
     if not valid:
         path,valid,col_points = correct_paths(path,paths)
-    
-    # while not valid:
-
-    #     print('A* modified')
-    #     path = a_star.main(start,goal,col_points)
-    #     path = np.tile(path,[1,2])
-    #     for i in range(len(path)):
-    #         path[i,3] = t + i * speed 
-    #         path[i,2] = car_id
-    #     valid,col_points = is_valid(path,paths)
-    # print("Valid path found:",valid,i)
-    
+        count = 0
+        while not valid and count<5 :
+            count +=1
+            print('A* modified')
+            path = a_star.main(start,goal,col_points)
+            path = np.tile(path,[1,2])
+            for i in range(len(path)):
+                path[i,3] = t + i * speed 
+                path[i,2] = car_id
+            valid,col_points = is_valid(path,paths)
     return path
 
 

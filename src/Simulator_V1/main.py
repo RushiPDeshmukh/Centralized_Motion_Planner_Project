@@ -18,7 +18,7 @@ total_requests = 0
 if __name__ == "__main__":
     t =  0
     while t < 3000:
-        num_cars = np.random.randint(3,10)
+        num_cars = np.random.randint(5,20)
         total_requests += num_cars
         print("|| num_cars:",num_cars,'|| time: ',t,"||")
 
@@ -43,7 +43,7 @@ if __name__ == "__main__":
             for id in colliding_ids:
                 index = paths[:,2]==id
                 paths = np.delete(paths,index,0)
-            pygame.time.delay(20)
+            pygame.time.delay(2)
         
     print("reached:",reached,' | total request:',total_requests,' | collision count:',collision_count)
 

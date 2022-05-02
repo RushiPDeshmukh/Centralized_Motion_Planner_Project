@@ -6,7 +6,7 @@ def is_valid(path,path_bank):
     for state in path:
         for row in path_bank:
             # print('state',state)
-            if (row[0] == state[0] and row[1] == state[1] and row[3] == state[3] and row[2]!=state[2]) or (row[0] == state[0] and row[1] == state[1] and row[3] ==state[3]+1 and row[2]!=state[2]):
+            if (row[0] == state[0] and row[1] == state[1] and row[3] == state[3] and row[2]!=state[2]):
                 validity = False
                 collision_points.append(list(state))
     return validity,collision_points
