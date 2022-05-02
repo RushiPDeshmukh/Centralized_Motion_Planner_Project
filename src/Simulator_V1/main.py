@@ -23,7 +23,7 @@ if __name__ == "__main__":
         num_cars = np.random.randint(1,10)
         total_requests += num_cars
         print("|| num_cars:",num_cars,'|| time: ',t,"||")
-        
+
         paths = np.empty((1,4))
         for i  in range(num_cars):
             s,g = car_gen.main()
@@ -33,17 +33,18 @@ if __name__ == "__main__":
 
             paths = paths.reshape((-1,4))
 
-            paths = paths[paths[:,3].argsort()].astype(np.int16)
         paths = paths[1:,:]
+        paths = paths[paths[:,3].argsort()].astype(np.int16)
+
         # print("Paths:",paths)
         
-        for i in range(max(paths[:,3])+1):
+        for i in range(min(paths[:,3]),max(paths[:,3])+1):
             tuple_list = paths[paths[:,3]==i]
             reached,collision_count,colliding_ids = render(win,rmap,tuple_list,car_list,reached,collision_count,total_requests)
             for id in colliding_ids:
                 i = paths[:,2]==id
                 paths = np.delete(paths,i,0)
-            pygame.time.delay(500)
+            pygame.time.delay(200)
         
 
    
