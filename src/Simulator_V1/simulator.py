@@ -118,7 +118,11 @@ def render(win,rmap,cars_data,car_list,reached = 0, collision_count = 0,total_re
                 car_list.pop(car_id)   
     collision,colliding_cars_id = collision_check(cars_data)
     if collision:
-        collision_count +=1
+        for id in colliding_cars_id:
+            if id in car_list.keys():
+                car_list.pop(id)
+                collision_count +=1
+        
     draw_map(win,rmap)
     for _,c in car_list.items():
         c.draw(win)

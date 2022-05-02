@@ -37,12 +37,13 @@ if __name__ == "__main__":
         paths = paths[1:,:]
         # print("Paths:",paths)
         
-        for i in range(max(paths[:,3])):
+        for i in range(max(paths[:,3])+1):
             tuple_list = paths[paths[:,3]==i]
             reached,collision_count,colliding_ids = render(win,rmap,tuple_list,car_list,reached,collision_count,total_requests)
             for id in colliding_ids:
                 i = paths[:,2]==id
                 paths = np.delete(paths,i,0)
             pygame.time.delay(500)
+        
 
    
