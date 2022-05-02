@@ -30,9 +30,15 @@ ORANGE = (255,165,0)
 GREY = (50,50,50)
 YELLOW = (255,215,11)
 DARK_YELLOW = (250,180,10)
+
 SOFT_VIOLET = (225,175,253)
 VIOLET = (147,0,255)
-
+SOFT_PINK = (247,139,209)
+PINK = (156,34,93)
+SOFT_BLU = (82,219,255)
+BLU = (45,100,245)
+color_cars1 = [VIOLET,PINK,BLU]
+color_cars2 = [SOFT_VIOLET,SOFT_PINK,SOFT_BLU]
 # win is the main display of the simulator
 win = pygame.display.set_mode(size = (win_width*2,win_width))
 pygame.display.set_caption("Simulator_V1")
@@ -66,8 +72,12 @@ class CAR:
         self.t = t
         # self.surface = pygame.image.load(path+ "//" +'car1.png')
         # self.surface = pygame.transform.scale(self.surface,(block_width,block_width))
-        sample = np.random.randint(len(colors))
-        self.color = colors[sample]
+        # sample = np.random.randint(len(colors))
+        # self.color = colors[sample]
+        sampler = self.id % 3
+        self.color1 = color_cars1[sampler]
+        self.color2 = color_cars2[sampler]
+    
     def update_pos(self,pos,t):
         self.pos = pos
         self.t
@@ -79,8 +89,8 @@ class CAR:
         # car_rect.topleft = self.pos
         c = self.pos[0] + block_width//2 , self.pos[1] + block_width//2
         # win.blit(self.surface,car_rect)
-        pygame.draw.circle(win,VIOLET,c,block_width//2)
-        pygame.draw.circle(win,SOFT_VIOLET,c,block_width/2.5,2)
+        pygame.draw.circle(win,self.color1,c,block_width//2)
+        pygame.draw.circle(win,self.color2,c,block_width/2.5,2)
         
 def collision_check(cars_data):
     collision = False
