@@ -11,3 +11,16 @@ Localized motion planning on-board an Autonomous Vehicle (AV) using SLAM (Simult
     grid_tile.py contains a class function of GRIDTILE. This will be used to represent the singel tile on the grid.
     map_grid.npy file contains a numpy array of size (150,150). This will be used to initialize the grid object for now.
     
+### Requirements
+The version is tested on ubuntu 20.04 using python 3.8.10
+
+* pygame 2.1.2
+* ROS noetic
+
+### Instructions to run the REPO
+
+git clone https://github.com/wokeengineer/Centralized_Motion_Planner_Project.git
+
+cd Ros_ws
+
+For further instructions follow the README in the Ros_ws folder.
