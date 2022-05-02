@@ -107,7 +107,7 @@ def render(win,rmap,cars_data,car_list,reached = 0, collision_count = 0):
         else:
             car_list[car_id] = CAR(pos,car_id,t)
         if pos1 == (-1,-1):
-                print('Reached')
+                # print('Reached')
                 reached +=1
                 car_list.pop(car_id)   
     collision,colliding_cars_id = collision_check(cars_data)
@@ -123,7 +123,7 @@ def render(win,rmap,cars_data,car_list,reached = 0, collision_count = 0):
     text2 = font.render("Collisions Detected: "+str(collision_count),True,BLACK)
     win.blit(text2,textrect2)
     pygame.display.update()
-    return reached,collision_count
+    return reached,collision_count,colliding_cars_id
     
 
 
