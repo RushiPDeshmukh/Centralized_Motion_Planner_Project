@@ -43,7 +43,7 @@ if __name__ == "__main__":
             for id in colliding_ids:
                 i = paths[:,2]==id
                 paths = np.delete(paths,i,0)
-            pygame.time.delay(50)
+            pygame.time.delay(500)
         
 
    

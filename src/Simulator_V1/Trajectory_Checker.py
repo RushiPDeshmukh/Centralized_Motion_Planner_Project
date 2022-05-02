@@ -19,7 +19,11 @@ def correct_paths(path, path_bank):
     while not valid and count !=5:
         for state in collision_points:
             t = state[3]
+            prev_state = curr_path[curr_path[:,3]==t-1]
             curr_path[curr_path[:,3]>=t,3] = curr_path[curr_path[:,3]>=t,3] + 1
+            curr_path = np.append(curr_path,prev_state)
+            curr_path = np.reshape(curr_path,(-1,4))
+            curr_path = curr_path[curr_path[:,3].argsort()].astype(np.int16)
         valid,collision_points = is_valid(curr_path,path_bank)
         count+=1
 
