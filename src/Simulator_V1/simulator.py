@@ -42,7 +42,11 @@ text = font.render("T",True,BLACK)
 textrect1 = text.get_rect()
 textrect1.topleft = (1300,10)
 textrect2 = text.get_rect()
-textrect2.topleft = (1300,30)
+textrect2.topleft = (1300,25)
+textrect3 = text.get_rect()
+textrect3.topleft = (1300,40)
+textrect4 = text.get_rect()
+textrect4.topleft = (1300,55)
 #loading the map of the city from the map.pkl
 # path = os.path.abspath(os.path.dirname(__file__))
 # file = open(path+'\map.pkl','rb')
@@ -95,10 +99,12 @@ def collision_check(cars_data):
     return collision,ids
 
 
-def render(win,rmap,cars_data,car_list,reached = 0, collision_count = 0): 
+def render(win,rmap,cars_data,car_list,reached = 0, collision_count = 0,total_request = 0): 
     cars_data = [tuple(cars_data[i]) for i in range(len(cars_data))]
+    time = 0
     for car_data in cars_data:
         x,y,car_id,t = car_data
+        time = t
         pos1 = x,y
         pos = (x*block_width,y*block_width)
         if car_id in car_list.keys():
@@ -113,15 +119,23 @@ def render(win,rmap,cars_data,car_list,reached = 0, collision_count = 0):
     collision,colliding_cars_id = collision_check(cars_data)
     if collision:
         for id in colliding_cars_id:
-            car_list.pop(id)
-            collision_count +=1
+            if id in car_list.keys():
+                car_list.pop(id)
+                collision_count +=1
+        
     draw_map(win,rmap)
     for _,c in car_list.items():
         c.draw(win)
-    text1 = font.render("Safe Reached Home: "+str(reached),True,BLACK)
+    text1 = font.render("Time: "+str(time),True,BLACK)
     win.blit(text1,textrect1)
-    text2 = font.render("Collisions Detected: "+str(collision_count),True,BLACK)
+    text2 = font.render("Total Request: "+str(total_request),True,BLACK)
     win.blit(text2,textrect2)
+    text3 = font.render("Safe Reached Home: "+str(reached),True,BLACK)
+    win.blit(text3,textrect3)
+    text4 = font.render("Collisions Detected: "+str(collision_count),True,BLACK)
+    win.blit(text4,textrect4)
+
+   
     pygame.display.update()
     return reached,collision_count,colliding_cars_id
     
