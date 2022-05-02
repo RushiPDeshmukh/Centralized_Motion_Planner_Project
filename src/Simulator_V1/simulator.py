@@ -110,6 +110,12 @@ def collision_check(cars_data):
 
 
 def render(win,rmap,cars_data,car_list,reached = 0, collision_count = 0,total_request = 0): 
+    collision,colliding_cars_id = collision_check(cars_data)
+    if collision:
+        for id in colliding_cars_id:
+            if id in car_list.keys():
+                car_list.pop(id)
+                collision_count +=1
     cars_data = [tuple(cars_data[i]) for i in range(len(cars_data))]
     time = 0
     for car_data in cars_data:
@@ -126,12 +132,8 @@ def render(win,rmap,cars_data,car_list,reached = 0, collision_count = 0,total_re
                 # print('Reached')
                 reached +=1
                 car_list.pop(car_id)   
-    collision,colliding_cars_id = collision_check(cars_data)
-    if collision:
-        for id in colliding_cars_id:
-            if id in car_list.keys():
-                car_list.pop(id)
-                collision_count +=1
+    
+    
         
     draw_map(win,rmap)
     for _,c in car_list.items():
